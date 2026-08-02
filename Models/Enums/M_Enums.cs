@@ -28,6 +28,7 @@ namespace Models.Enums
             LastName,
             DateOfBirth,
             PhoneNumber,
+            Address,
             Email,
             ImagePath,
             CountryID

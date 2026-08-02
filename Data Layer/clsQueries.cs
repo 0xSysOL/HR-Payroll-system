@@ -27,9 +27,12 @@ namespace Data_Layer
         {
 
             public static string Add = "AddPerson";
+            public static string Update = "UpdatePerson";
+            public static string Delete = "DeletePerson";
             public static string GetAll = "GetAllPeople";
             public static string SelectRecords = "SelectRecords_People";
-
+            public static string IsNationalNoExists = "IsNationalNoExists";
+            public static string GetPersonIDByID = "GetPersonIDByID";
         }
 
 

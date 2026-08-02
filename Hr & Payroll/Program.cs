@@ -38,22 +38,22 @@ namespace Hr___Payroll
 
         public static void TestPeople()
         {
-            //MPeople people = new MPeople();
+            //MPeople StrPerson = new MPeople();
 
-            //people.NationalNo = "19989876543210";
-            //people.FirstName = "Fatima";
-            //people.SecondName = "Hassan";
-            //people.ThirdName = "Ibrahim";
-            //people.LastName = "Al-Jubouri";
-            //people.DateOfBirth = new DateTime(1998, 10, 20);
-            //people.Gender = 0;
-            //people.Address = "Erbil - Ankawa - 100 Meter Street";
-            //people.Phone = "+9647509876543";
-            //people.Email = "fatima.hassan@example.com";
-            //people.ImagePath = "9876543210123";
-            //people.Country_ID = 1;
+            //StrPerson.NationalNo = "19989876543210";
+            //StrPerson.FirstName = "Fatima";
+            //StrPerson.SecondName = "Hassan";
+            //StrPerson.ThirdName = "Ibrahim";
+            //StrPerson.LastName = "Al-Jubouri";
+            //StrPerson.DateOfBirth = new DateTime(1998, 10, 20);
+            //StrPerson.Gender = 0;
+            //StrPerson.Address = "Erbil - Ankawa - 100 Meter Street";
+            //StrPerson.Phone = "+9647509876543";
+            //StrPerson.Email = "fatima.hassan@example.com";
+            //StrPerson.ImagePath = "9876543210123";
+            //StrPerson.Country_ID = 1;
 
-            //clsPeople_BL clsPeople_BL = new clsPeople_BL(people);
+            //clsPeople_BL clsPeople_BL = new clsPeople_BL(StrPerson);
 
 
 
@@ -67,27 +67,48 @@ namespace Hr___Payroll
             //foreach (DataRow row in data.Rows)
             //{
 
-            //    Console.WriteLine(row["Person ID"]);
+            //    Console.WriteLine(row["StrPerson ID"]);
 
             //}
 
 
-            M_eColumnsName.ePeople[] ePeople =
-            {
-                M_eColumnsName.ePeople.ImagePath,
-                M_eColumnsName.ePeople.NationalNo
-            };
+            //M_eColumnsName.ePeople[] ePeople =
+            //{
+            //    M_eColumnsName.ePeople.ImagePath,
+            //    M_eColumnsName.ePeople.NationalNo,
+            //    M_eColumnsName.ePeople.Address,
+            //    M_eColumnsName.ePeople.FirstName
+            //};
 
-            DataTable data =  clsPeople_BL.SelectRecords(ePeople);
+            //DataTable data =  clsPeople_BL.SelectRecords(ePeople);
 
-            Console.OutputEncoding = Encoding.UTF8;
-            foreach (DataRow row in data.Rows)
-            {
-                Console.WriteLine(row["Address"]);
-                Console.WriteLine(row["FirstName"]);
+            //Console.OutputEncoding = Encoding.UTF8;
+            //foreach (DataRow row in data.Rows)
+            //{
+            //    Console.WriteLine(row["NationalNo"]);
 
 
-            }
+            //}
+
+
+
+            //MPeople d = new MPeople();
+            //clsPeople_BL Person = new clsPeople_BL(d);
+
+            //// Person.StrPerson.FirstName = "Nano";
+            //// Person.StrPerson.SecondName = "Nano";
+            //// Person.StrPerson.ThirdName = "N";
+            //// Person.StrPerson.LastName = "Kh";
+            //// Person.StrPerson.Address = "iraq";
+
+
+            ////bool res =  Person.Save();
+
+            //bool res=  Person.Delete(2);
+        }
+
+        public static void TestUser()
+        {
 
 
         }

@@ -4,6 +4,7 @@ using Models.Entities;
 using System.Data;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Data_Layer
 {
@@ -103,12 +104,10 @@ namespace Data_Layer
 
             foreach(var prop in propertyInfo)
             {
-                var MyAttr = prop.GetCustomAttribute<MyAttribute>();
+                var MyAttr = prop.GetCustomAttribute<ForParametersAttribute>();
                 if (MyAttr != null && prop.GetValue(TableOb) != null)
-                {
-                    command.Parameters.AddWithValue(MyAttr.RealNameColumn, prop.GetValue(TableOb));
+                    command.Parameters.AddWithValue(MyAttr.ParameterNameInSQL, prop.GetValue(TableOb));
 
-                }
             }
 
 
@@ -129,9 +128,9 @@ namespace Data_Layer
 
                 if ( Property.GetValue(TableOb) != null)
                 {
-                    var MyAttr = Property.GetCustomAttribute<MyAttribute>();
+                    var MyAttr = Property.GetCustomAttribute<ForParametersAttribute>();
                     if(MyAttr != null)
-                    ColumnsName += MyAttr.RealNameColumn + ",";
+                    ColumnsName += MyAttr.ParameterNameInSQL + ",";
                 }
             }
 
@@ -158,6 +157,52 @@ namespace Data_Layer
             return Text.Remove(Text.Length - 1);
         }
 
-       
+
+
+        public static object Scalar_Execute(SqlCommand command)
+        {
+
+            try
+            {
+
+
+
+                return command.ExecuteScalar();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+
+            return null;
+
+
+
+        }
+        public static object ExecuteNoneQu(SqlCommand command)
+        {
+
+            try
+            {
+
+
+
+                return command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+
+            return null;
+
+
+
+        }
+
     }
 }
