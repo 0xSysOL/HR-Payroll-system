@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using static Models.Enums.M_Enums;
 namespace Business___HR.Utilities
 {
     internal  class Utilities
@@ -33,6 +33,15 @@ namespace Business___HR.Utilities
             return Person;
         }
 
+
+        public static  eMode ChangeModeToUpdate(eMode mode)
+        {
+
+            if (mode == eMode.Add)
+                mode = eMode.Update;
+
+            return mode;
+        }
 
     }
 

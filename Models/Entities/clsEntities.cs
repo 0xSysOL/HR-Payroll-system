@@ -264,7 +264,7 @@ namespace Models.Entities
     public class MUser
     {
 
-        [ForParametersAttribute("User ID")]
+        [ForParametersAttribute("UserID")]
         public int? User_ID { get; set; }
 
         [ForParametersAttribute("Username")]
@@ -277,10 +277,10 @@ namespace Models.Entities
         /// 1 = Active.
         /// 0 = Not Active.
         /// </summary>
-        [ForParametersAttribute("Is Active")]
+        [ForParametersAttribute("IsActive")]
         public bool? IsActive { get; set; }
 
-        [ForParametersAttribute("Person ID")]
+        [ForParametersAttribute("PersonID")]
         public int? Person_ID { get; set; }
     }
 

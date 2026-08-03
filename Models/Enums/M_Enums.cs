@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Models.Enums
+﻿namespace Models.Enums
 {
     public class M_Enums
     {
 
-     public  enum eMode { Add,Update}
+        public enum eMode { Add, Update }
 
 
     }
@@ -17,8 +11,8 @@ namespace Models.Enums
 
     public class M_eColumnsName
     {
-    
-   public enum ePeople
+
+        public enum ePerson
         {
             PersonID,
             NationalNo,
@@ -34,6 +28,16 @@ namespace Models.Enums
             CountryID
         }
 
+
+        public enum eUser
+        {
+            UserID,
+            Username,
+            Password,
+            IsActive,
+            PersonID
+
+        }
 
     }
 

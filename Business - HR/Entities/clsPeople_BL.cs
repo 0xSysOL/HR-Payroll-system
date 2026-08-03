@@ -14,10 +14,10 @@ namespace Business___HR.Entities
 
 
         eMode mode;
-        public clsPeople_BL(MPeople people)
+        public clsPeople_BL(MPeople Person)
         {
 
-            this.StrPerson = people;
+            this.StrPerson = Person;
             mode = eMode.Add;
         }
         public clsPeople_BL(int PersonID)
@@ -31,6 +31,8 @@ namespace Business___HR.Entities
 
         public bool Save()
         {
+
+            // Feat: Add Validation
             bool Resutl = false;
 
             switch (mode)
@@ -59,59 +61,59 @@ namespace Business___HR.Entities
         }
 
 
-        public static DataTable SelectRecords(M_eColumnsName.ePeople[] People)
+        public static DataTable SelectRecords(M_eColumnsName.ePerson[] People)
         {
 
             MPeople Structure = new MPeople();
-            foreach (M_eColumnsName.ePeople item in People)
+            foreach (M_eColumnsName.ePerson item in People)
             {
                 switch (item)
                 {
-                    case M_eColumnsName.ePeople.PersonID:
+                    case M_eColumnsName.ePerson.PersonID:
                         Structure.Person_ID = -1;
                         break;
 
-                    case M_eColumnsName.ePeople.NationalNo:
+                    case M_eColumnsName.ePerson.NationalNo:
                         Structure.NationalNo = "";
                         break;
 
-                    case M_eColumnsName.ePeople.FirstName:
+                    case M_eColumnsName.ePerson.FirstName:
                         Structure.FirstName = "";
                         break;
 
-                    case M_eColumnsName.ePeople.SecondName:
+                    case M_eColumnsName.ePerson.SecondName:
                         Structure.SecondName = "";
                         break;
 
-                    case M_eColumnsName.ePeople.ThirdName:
+                    case M_eColumnsName.ePerson.ThirdName:
                         Structure.ThirdName = "";
                         break;
 
-                    case M_eColumnsName.ePeople.LastName:
+                    case M_eColumnsName.ePerson.LastName:
                         Structure.LastName = "";
                         break;
 
-                    case M_eColumnsName.ePeople.DateOfBirth:
+                    case M_eColumnsName.ePerson.DateOfBirth:
                         Structure.DateOfBirth = new DateTime();
                         break;
 
-                    case M_eColumnsName.ePeople.PhoneNumber:
+                    case M_eColumnsName.ePerson.PhoneNumber:
                         Structure.Phone = "";
                         break;
 
-                    case M_eColumnsName.ePeople.Email:
+                    case M_eColumnsName.ePerson.Email:
                         Structure.Email = "";
                         break;
 
-                    case M_eColumnsName.ePeople.ImagePath:
+                    case M_eColumnsName.ePerson.ImagePath:
                         Structure.ImagePath = "";
                         break;
 
-                    case M_eColumnsName.ePeople.CountryID:
+                    case M_eColumnsName.ePerson.CountryID:
                         Structure.Country_ID = -1;
                         break;
 
-                    case M_eColumnsName.ePeople.Address:
+                    case M_eColumnsName.ePerson.Address:
                         Structure.Address = "";
                         break;
                     default:

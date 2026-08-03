@@ -32,9 +32,17 @@ namespace Data_Layer
             public static string GetAll = "GetAllPeople";
             public static string SelectRecords = "SelectRecords_People";
             public static string IsNationalNoExists = "IsNationalNoExists";
-            public static string GetPersonIDByID = "GetPersonIDByID";
+            public static string GetPersonIDByID = "GetPersonIDByID"; 
         }
 
+        public class clsQUser
+        {
+            public static string Add = "AddUser";
+            public static string GetAll = "GetAllUser";
+            public static string SelectRecords = "SelectRecords_User";
+
+
+        }
 
     }
 }

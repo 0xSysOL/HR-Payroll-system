@@ -112,7 +112,24 @@ namespace Data_Layer
 
 
         }
-
+        /// <summary>
+        /// 
+        /// this Function Take two Parameter,
+        /// command and TableOb.
+        /// <TableOb> See In Variable Came from outside,
+        /// if Is Null He Will Not Add the Column to string Variable
+        /// If Not He Will Add Like that 
+        /// Example: "PersonID,FirstName", And Method Will Added to string
+        /// why this Important Because To Send As String Text To Database as parameters
+        /// And There will be Process in DB , and selected The Columns That Send it
+        /// Example: when you Send Just "PersonID" the Server
+        /// Just Return one Column > PersonID, not else.
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// 
+        /// <param name="TableOb"></param>
+        /// <returns></returns>
         public static string AddParametersToString(SqlCommand command, object TableOb)
         {
             if (TableOb == null || command == null)
@@ -141,32 +158,12 @@ namespace Data_Layer
         }
 
 
-        public static string AddColumnsToString(string[] Columns)
-        {
-
-            string Text = "";
-            foreach (string Column in Columns) 
-            {
-
-                Text = Column + ",";
-            }
-
-            
-
-
-            return Text.Remove(Text.Length - 1);
-        }
-
-
 
         public static object Scalar_Execute(SqlCommand command)
         {
 
             try
             {
-
-
-
                 return command.ExecuteScalar();
 
             }

@@ -72,15 +72,15 @@ namespace Hr___Payroll
             //}
 
 
-            //M_eColumnsName.ePeople[] ePeople =
+            //M_eColumnsName.ePerson[] ePerson =
             //{
-            //    M_eColumnsName.ePeople.ImagePath,
-            //    M_eColumnsName.ePeople.NationalNo,
-            //    M_eColumnsName.ePeople.Address,
-            //    M_eColumnsName.ePeople.FirstName
+            //    M_eColumnsName.ePerson.ImagePath,
+            //    M_eColumnsName.ePerson.NationalNo,
+            //    M_eColumnsName.ePerson.Address,
+            //    M_eColumnsName.ePerson.FirstName
             //};
 
-            //DataTable data =  clsPeople_BL.SelectRecords(ePeople);
+            //DataTable data =  clsPeople_BL.SelectRecords(ePerson);
 
             //Console.OutputEncoding = Encoding.UTF8;
             //foreach (DataRow row in data.Rows)
@@ -110,13 +110,44 @@ namespace Hr___Payroll
         public static void TestUser()
         {
 
+            // MUser user = new MUser();
+
+            // user.Username = "User1";
+            // user.IsActive = true;
+            // user.Password = "1234";
+            // user.Person_ID = 1;
+            // clsUser_BL clsUser = new clsUser_BL(user);
+
+
+            //bool Re = clsUser.Save();
+
+
+            //DataTable data = clsUser_BL.GetAll();
+
+            //foreach(DataRow row in data.Rows)
+            //{
+
+            //    Console.WriteLine(row["PersonID"]);
+            //    Console.WriteLine(row["Username"]);
+
+            //}
+
+
+
+            Models.Enums.M_eColumnsName.eUser[] eeUser =
+                { Models.Enums.M_eColumnsName.eUser.IsActive};
+
+
+            DataTable data  = clsUser_BL.SelectRecords(eeUser);
+
 
         }
         static void Main(string[] args)
         {
 
 
-            TestPeople();
+            TestUser(); 
+        
         }
     }
 }
