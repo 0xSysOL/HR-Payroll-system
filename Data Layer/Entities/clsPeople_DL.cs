@@ -129,8 +129,8 @@ namespace Data_Layer.Entities
                 command.Parameters.AddWithValue("PersonID",PersonID);
 
                 connection.Open();
-                object Result = Utilities_DB.ExecuteNoneQu(command);
-                return Result != null ? true : false;
+                short Result = Convert.ToInt16(Utilities_DB.ExecuteNoneQu(command));
+                return Result != 0 ? true : false;
 
 
             }

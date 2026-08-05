@@ -1,12 +1,7 @@
 ﻿using Data_Layer.Configuration;
 using Microsoft.Data.SqlClient;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Data_Layer.clsQueries;
 
 namespace Data_Layer.Entities
@@ -30,12 +25,30 @@ namespace Data_Layer.Entities
 
             }
         }
+
+        public static bool Update(MUser User)
+        {
+
+
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.Update, connection, CommandType.StoredProcedure);
+
+                Utilities_DB.AddParametersWithValue(command, User);
+
+                connection.Open();
+                return Convert.ToBoolean(Utilities_DB.Scalar_Execute(command));
+
+
+            }
+
+        }
         public static DataTable GetAll()
         {
 
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
-                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.GetAll, connection,CommandType.StoredProcedure);
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.GetAll, connection, CommandType.StoredProcedure);
 
 
 
@@ -51,7 +64,7 @@ namespace Data_Layer.Entities
         {
 
 
-            using(SqlConnection connection = clsSetting.GetSqlConnection())
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.SelectRecords, connection, CommandType.StoredProcedure);
 
@@ -67,6 +80,72 @@ namespace Data_Layer.Entities
             }
 
 
+        }
+
+
+        public static DataTable GetUser(int UserID)
+        {
+
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.GetUser, connection, CommandType.StoredProcedure);
+                command.Parameters.AddWithValue("UserID", UserID);
+
+                connection.Open();
+
+                return Utilities_DB.SelectRecords_Execute(command);
+
+            }
+
+
+        }
+
+
+        public static bool IsUserIDExists(int UserID)
+        {
+
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.IsUserIDExists, connection, CommandType.StoredProcedure);
+                command.Parameters.AddWithValue("UserID", UserID);
+                connection.Open();
+                short Result = Convert.ToInt16(Utilities_DB.Scalar_Execute(command));
+                return Result != 0 ? true : false;
+
+            }
+
+
+            
+        }
+        public static bool DeleteUser(int UserID)
+        {
+
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.DeleteUser,connection,CommandType.StoredProcedure);
+                command.Parameters.AddWithValue("UserID", UserID);
+                connection.Open();
+                short Result = Convert.ToInt16(Utilities_DB.ExecuteNoneQu(command));
+                return Result != 0 ? true : false;
+            }
+
+
+        }
+
+
+
+        public static bool IsUsernameExists(string Username)
+        {
+
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.IsUsernameExists, connection, CommandType.StoredProcedure);
+                command.Parameters.AddWithValue("Username", Username);
+                connection.Open();
+                short Result = Convert.ToInt16(Utilities_DB.Scalar_Execute(command));
+                return Result != 0 ? true : false;
+
+            }
         }
 
     }

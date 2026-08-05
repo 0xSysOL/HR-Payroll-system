@@ -38,8 +38,13 @@ namespace Data_Layer
         public class clsQUser
         {
             public static string Add = "AddUser";
+            public static string Update = "UpdateUser";
+            public static string DeleteUser = "deleteUser";
             public static string GetAll = "GetAllUser";
             public static string SelectRecords = "SelectRecords_User";
+            public static string GetUser = "GetUser";
+            public static string IsUserIDExists = "IsUserIDExists";
+            public static string IsUsernameExists = "IsUsernameExists";
 
 
         }

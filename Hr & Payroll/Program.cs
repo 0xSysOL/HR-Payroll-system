@@ -38,26 +38,26 @@ namespace Hr___Payroll
 
         public static void TestPeople()
         {
-            //MPeople StrPerson = new MPeople();
+            MPeople StrPerson = new MPeople();
 
-            //StrPerson.NationalNo = "19989876543210";
-            //StrPerson.FirstName = "Fatima";
-            //StrPerson.SecondName = "Hassan";
-            //StrPerson.ThirdName = "Ibrahim";
-            //StrPerson.LastName = "Al-Jubouri";
-            //StrPerson.DateOfBirth = new DateTime(1998, 10, 20);
-            //StrPerson.Gender = 0;
-            //StrPerson.Address = "Erbil - Ankawa - 100 Meter Street";
-            //StrPerson.Phone = "+9647509876543";
-            //StrPerson.Email = "fatima.hassan@example.com";
-            //StrPerson.ImagePath = "9876543210123";
-            //StrPerson.Country_ID = 1;
+            StrPerson.NationalNo = "19989876543210";
+            StrPerson.FirstName = "Fatima";
+            StrPerson.SecondName = "Hassan";
+            StrPerson.ThirdName = "Ibrahim";
+            StrPerson.LastName = "Al-Jubouri";
+            StrPerson.DateOfBirth = new DateTime(1998, 10, 20);
+            StrPerson.Gender = 0;
+            StrPerson.Address = "Erbil - Ankawa - 100 Meter Street";
+            StrPerson.Phone = "+9647509876543";
+            StrPerson.Email = "fatima.hassan@example.com";
+            StrPerson.ImagePath = "9876543210123";
+            StrPerson.Country_ID = 1;
 
-            //clsPeople_BL clsPeople_BL = new clsPeople_BL(StrPerson);
+            clsPeople_BL clsPeople_BL = new clsPeople_BL(StrPerson);
 
 
 
-            //clsPeople_BL.Save();
+            clsPeople_BL.Save();
 
 
 
@@ -110,13 +110,13 @@ namespace Hr___Payroll
         public static void TestUser()
         {
 
-            // MUser user = new MUser();
+            //MUser user = new MUser();
 
-            // user.Username = "User1";
-            // user.IsActive = true;
-            // user.Password = "1234";
-            // user.Person_ID = 1;
-            // clsUser_BL clsUser = new clsUser_BL(user);
+            //user.Username = "User1";
+            //user.IsActive = true;
+            //user.Password = "1234";
+            //user.Person_ID = 1;
+            //clsUser_BL clsUser = new clsUser_BL(user);
 
 
             //bool Re = clsUser.Save();
@@ -134,20 +134,32 @@ namespace Hr___Payroll
 
 
 
-            Models.Enums.M_eColumnsName.eUser[] eeUser =
-                { Models.Enums.M_eColumnsName.eUser.IsActive};
+            //Models.Enums.M_eColumnsName.eUser[] eeUser =
+            //    { Models.Enums.M_eColumnsName.eUser.IsActive};
 
 
-            DataTable data  = clsUser_BL.SelectRecords(eeUser);
+            //DataTable data  = clsUser_BL.SelectRecords(eeUser);
+
+            //clsUser_BL clsUser_BL = new clsUser_BL(new MUser());
+
+            //clsUser_BL.(1);
+
+            //clsUser_BL.Delete(6);
+
+
+
+            //bool i = clsUser_BL.IsUsernameExists("User1");
+
+
+
 
 
         }
         static void Main(string[] args)
         {
 
+            TestUser();
 
-            TestUser(); 
-        
         }
     }
 }
