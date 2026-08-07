@@ -9,12 +9,28 @@ namespace Business___HR.Entities
 {
     public class clsUser_BL
     {
-        public MUser StrUser;
+        private MUser StrUser;
         eMode mode;
 
-        public clsUser_BL(MUser User)
+        public string? Username { get => StrUser.Username ?? "Empty"; set => StrUser.Username = value; }
+
+       
+        public string GetIsActive() => StrUser.IsActive != null ? StrUser.IsActive == true ? "Yes" : "No" : "Empty";
+        public void SetIsActive(bool IsActive) => StrUser.IsActive = IsActive;
+
+        public int? PersonID
         {
-            StrUser = User;
+            get => StrUser.Person_ID != null ? StrUser.Person_ID : -1;
+            set => StrUser.Person_ID = value;
+        }
+      
+        public void SetPassword(string Password) => StrUser.Password = Utilities.Utilities.HashPassword(Password);
+
+
+
+        public clsUser_BL()
+        {
+            StrUser = new MUser();
             mode = eMode.Add;
         }
 
@@ -46,7 +62,7 @@ namespace Business___HR.Entities
         /// </summary>
         /// <returns>DataTable</returns>
         public static DataTable GetAll() => clsUser_DL.GetAll();
-        
+
 
         public static DataTable SelectRecords(eUser[] _eUser)
         {

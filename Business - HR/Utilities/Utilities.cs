@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Models.Enums.M_Enums;
+using System.Security.Cryptography;
 namespace Business___HR.Utilities
 {
     internal  class Utilities
@@ -74,6 +75,31 @@ namespace Business___HR.Utilities
 
             return mode;
         }
+
+
+
+
+       public static string HashPassword(string Value)
+        {
+            byte[] Values = Encoding.UTF8.GetBytes(Value);
+            SHA256 Hash = SHA256.Create();
+            byte[] HBValues = Hash.ComputeHash(Values);
+
+            string HashValue = "";
+
+            for (int i = 0; i < HBValues.Length; i++)
+
+            {
+
+                HashValue += HBValues[i].ToString("x2");
+
+
+
+            }
+
+            return HashValue;
+        }
+
 
     }
 

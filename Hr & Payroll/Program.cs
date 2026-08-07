@@ -110,14 +110,13 @@ namespace Hr___Payroll
         public static void TestUser()
         {
 
-            //MUser user = new MUser();
-
-            //user.Username = "User1";
-            //user.IsActive = true;
-            //user.Password = "1234";
-            //user.Person_ID = 1;
-            //clsUser_BL clsUser = new clsUser_BL(user);
-
+            
+         
+            //clsUser_BL clsUser = new clsUser_BL();
+            //clsUser.SetUsername("User1");
+            //clsUser.SetIsActive(true);
+            //clsUser.SetPassword("1234");
+            //clsUser.SetPersonID(1);
 
             //bool Re = clsUser.Save();
 
@@ -154,11 +153,18 @@ namespace Hr___Payroll
 
 
 
+            //clsUser_BL user_BL = new clsUser_BL();
+
+
+            //user_BL.SetPassword("1234");
+
         }
         static void Main(string[] args)
         {
 
-            TestUser();
+        
+
+
 
         }
     }
