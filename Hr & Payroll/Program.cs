@@ -159,10 +159,39 @@ namespace Hr___Payroll
             //user_BL.SetPassword("1234");
 
         }
+
+        public static void TestEmployee()
+        {
+            //clsEmployee_BL Employee = new clsEmployee_BL();
+
+            //Employee.StrEmployee.Person_ID = 1;
+            //Employee.StrEmployee.Manager_ID = null;
+            //Employee.StrEmployee.Department_ID = 1;
+            //Employee.StrEmployee.CreateByUser_ID = 10;
+            //Employee.StrEmployee.Salary = 75000.00m;
+            //Employee.StrEmployee.Status = 1;
+            //Employee.StrEmployee.HireDate = new DateTime(2023, 6, 15);
+
+            //if (Employee.Save())
+            //    Console.WriteLine("Yes");
+            //else
+            //    Console.WriteLine("No");
+
+
+            //if(clsEmployee_BL.IsEmployeeExists(-1))
+            //         Console.WriteLine("Yes");
+            //else
+            //    Console.WriteLine("No");
+
+
+
+        }
         static void Main(string[] args)
         {
 
-        
+
+
+            TestEmployee();
 
 
 

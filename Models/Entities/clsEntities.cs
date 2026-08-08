@@ -111,23 +111,23 @@ namespace Models.Entities
         [ForParametersAttribute("DepartmentName")]
         public string? Department_Name { get; set; }
     }
-
+     
     public class MEmployee
     {
 
-        [ForParametersAttribute("Employee ID")]
-        public int Employee_ID { get; set; }
+        [ForParametersAttribute("EmployeeID")]
+        public int? Employee_ID { get; set; }
 
-        [ForParametersAttribute("Person ID")]
+        [ForParametersAttribute("PersonID")]
         public int? Person_ID { get; set; }
 
-        [ForParametersAttribute("Manager ID")]
+        [ForParametersAttribute("ManagerID")]
         public int? Manager_ID { get; set; }
 
-        [ForParametersAttribute("Department ID")]
+        [ForParametersAttribute("DepartmentID")]
         public int? Department_ID { get; set; }
 
-        [ForParametersAttribute("Create By User ID")]
+        [ForParametersAttribute("CreateByUserID")]
         public int? CreateByUser_ID { get; set; }
 
         [ForParametersAttribute("Salary")]
@@ -139,7 +139,7 @@ namespace Models.Entities
         [ForParametersAttribute("Status")]
         public byte? Status { get; set; }
 
-        [ForParametersAttribute("Hire Date")]
+        [ForParametersAttribute("HireDate")]
         public DateTime? HireDate { get; set; }
     }
 

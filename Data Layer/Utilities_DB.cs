@@ -23,7 +23,7 @@ namespace Data_Layer
             command.CommandType = commandType;
             return command;
         }
-
+        
 
 
         /// <summary>
@@ -80,6 +80,7 @@ namespace Data_Layer
 
             return Text.Replace(OldValue, newValue);
         }
+
      
         /// <summary>
         /// we Should Use This Method For Inserting That We Add 3-4 or more 
@@ -107,11 +108,18 @@ namespace Data_Layer
                 var MyAttr = prop.GetCustomAttribute<ForParametersAttribute>();
                 if (MyAttr != null && prop.GetValue(TableOb) != null)
                     command.Parameters.AddWithValue(MyAttr.ParameterNameInSQL, prop.GetValue(TableOb));
+                
+
 
             }
 
 
         }
+      
+
+
+
+
         /// <summary>
         /// 
         /// this Function Take two Parameter,

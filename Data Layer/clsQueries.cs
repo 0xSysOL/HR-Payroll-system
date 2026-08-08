@@ -48,6 +48,13 @@ namespace Data_Layer
 
 
         }
+        public class clsQEmployee
+        {
+
+            public static string Add = "AddEmployee";
+            public static string IsEmployeeExists = "IsEmployeeExists";
+
+        }
 
     }
 }
