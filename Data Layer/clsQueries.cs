@@ -52,7 +52,9 @@ namespace Data_Layer
         {
 
             public static string Add = "AddEmployee";
+            public static string Update = "UpdateEmployee";
             public static string IsEmployeeExists = "IsEmployeeExists";
+            public static string GetEmployeeByID = "GetEmployeeByID";
 
         }
 

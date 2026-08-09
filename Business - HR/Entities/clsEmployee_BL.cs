@@ -8,14 +8,25 @@ namespace Business___HR.Entities
 
         public MEmployee StrEmployee;
         eMode _eMode;
-
+            
 
         public clsEmployee_BL()
         {
             StrEmployee = new MEmployee();
             _eMode = eMode.Add;
         }
+        public clsEmployee_BL(int EmployeeID)
+        {
+            _eMode = eMode.Update;
+            StrEmployee = GetEmployeeByID(EmployeeID);
+        }
 
+        public MEmployee GetEmployeeByID(int EmployeeID)
+        {
+
+            return Utilities.Utilities.ConvertDataTableToMEmployee(clsEmployee_DL.GetEmployeeByID(EmployeeID));
+
+        }
 
         public bool Save()
         {
@@ -29,10 +40,10 @@ namespace Business___HR.Entities
 
 
                 case eMode.Update:
-                    return clsEmployee_DL.Update();
-                    break;
+                    return clsEmployee_DL.Update(StrEmployee);
 
             }
+
             return false;
 
         }
@@ -42,6 +53,8 @@ namespace Business___HR.Entities
 
             return clsEmployee_DL.IsEmployeeExists(EmployeeID);
         }
+
+
 
     }
 

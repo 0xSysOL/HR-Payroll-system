@@ -183,8 +183,14 @@ namespace Hr___Payroll
             //else
             //    Console.WriteLine("No");
 
+            clsEmployee_BL Employee = new clsEmployee_BL(6);
 
-
+            Employee.StrEmployee.Salary = 7000;
+            
+            if (Employee.Save())
+                Console.WriteLine("Yes");
+            else
+                Console.WriteLine("No");
         }
         static void Main(string[] args)
         {

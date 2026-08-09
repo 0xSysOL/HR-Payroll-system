@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using static Models.Enums.M_Enums;
 using System.Security.Cryptography;
 namespace Business___HR.Utilities
-{
+{ 
     internal  class Utilities
     {
 
@@ -39,6 +39,28 @@ namespace Business___HR.Utilities
 
 
             return Person;
+        }
+        public static MEmployee ConvertDataTableToMEmployee(DataTable data)
+        {
+            MEmployee employee = new MEmployee();
+
+
+            if (data.Rows.Count > 0)
+            {
+                var row = data.Rows[0];
+
+                employee.Employee_ID =     row["EmployeeID"] != DBNull.Value ?     (int?)row["EmployeeID"] : null;
+                employee.Person_ID =       row["PersonID"] != DBNull.Value ?       (int?)row["PersonID"] : null;
+                employee.Manager_ID =      row["ManagerID"] != DBNull.Value ?      (int?)row["ManagerID"] : null;
+                employee.Department_ID =   row["DepartmentID"] != DBNull.Value ?   (int?)row["DepartmentID"] : null;
+                employee.CreateByUser_ID = row["CreateByUserID"] != DBNull.Value ? (int?)row["CreateByUserID"] : null;
+                employee.Salary =          row["EmployeeSalary"] != DBNull.Value ?         (decimal?)row["EmployeeSalary"] : null;
+                employee.Status =          row["EmployeeStatus"] != DBNull.Value ?         (byte?)row["EmployeeStatus"] : null;
+                employee.HireDate =        row["HireDate"] != DBNull.Value ?       (DateTime?)row["HireDate"] : null;
+            }
+
+
+            return employee;
         }
 
         public static MUser ConvertDataTableToMUser(DataTable data)

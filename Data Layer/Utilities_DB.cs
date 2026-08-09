@@ -11,6 +11,17 @@ namespace Data_Layer
     internal class Utilities_DB
     {
 
+        #region Employee
+        public static void AddValueToManagerID(SqlCommand command, int? ID)
+        {
+
+
+            command.Parameters.AddWithValue("@ManagerID", ID == null ? DBNull.Value : ID);
+
+        }
+        #endregion
+
+
         /// <summary>
         /// initialize SqlCommand
         /// </summary>
