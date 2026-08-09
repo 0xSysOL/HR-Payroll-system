@@ -41,3 +41,8 @@ _ReSharper*/
 ## Environment / OS specific files
 .DS_Store
 Thumbs.db
+
+
+## VS Code Specific Settings (Laptop Security)
+.vscode/
+
