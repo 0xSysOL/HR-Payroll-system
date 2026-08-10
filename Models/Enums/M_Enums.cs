@@ -40,7 +40,18 @@
         }
 
 
+        public enum eEmployee
+        {
+            EmployeeID,
+            PersonID,
+            ManagerID,
+            DepartmentID,
+            CreateByUserID,
+            EmployeeSalary,
+            EmployeeStatus,
+            HireDate
 
+        }
 
     }
 

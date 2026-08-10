@@ -8,7 +8,7 @@ namespace Data_Layer.Entities
     public class clsEmployee_DL
     {
 
-    
+
         public static int? Add(MEmployee Structure)
         {
 
@@ -31,7 +31,7 @@ namespace Data_Layer.Entities
         {
 
 
-            using(SqlConnection connection = clsSetting.GetSqlConnection())
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQEmployee.Update, connection, CommandType.StoredProcedure);
 
@@ -41,7 +41,7 @@ namespace Data_Layer.Entities
 
                 connection.Open();
                 return Convert.ToBoolean(Utilities_DB.ExecuteNoneQu(command));
-                
+
 
 
 
@@ -51,9 +51,9 @@ namespace Data_Layer.Entities
 
         public static bool IsEmployeeExists(int EmployeeID)
         {
-            using(SqlConnection connection = clsSetting.GetSqlConnection())
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
-                SqlCommand command = Utilities_DB.GetSQL_Command(clsQEmployee.IsEmployeeExists, connection,CommandType.StoredProcedure);
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQEmployee.IsEmployeeExists, connection, CommandType.StoredProcedure);
 
                 command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
                 connection.Open();
@@ -66,7 +66,7 @@ namespace Data_Layer.Entities
         public static DataTable GetEmployeeByID(int EmployeeID)
         {
 
-            using(SqlConnection connection = clsSetting.GetSqlConnection())
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
 
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQEmployee.GetEmployeeByID, connection, CommandType.StoredProcedure);
@@ -77,7 +77,40 @@ namespace Data_Layer.Entities
             }
 
         }
+        public static DataTable SelectRecords(MEmployee Structure)
+        {
 
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQEmployee.SelectRecords, connection, CommandType.StoredProcedure);
+
+
+                command.Parameters.AddWithValue("@ColumnNames", Utilities_DB.AddParametersToString(command, Structure));
+
+                connection.Open();
+                return Utilities_DB.SelectRecords_Execute(command);
+
+            }
+
+        }
+
+        public static bool Delete(int EmployeeID)
+        {
+
+
+            using(SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQEmployee.Delete,connection,CommandType.StoredProcedure);
+
+                command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                connection.Open();
+                // Feat: You Can Added To Function
+                short Result = Convert.ToInt16(Utilities_DB.ExecuteNoneQu(command));
+                return Result != 0 ? true : false;
+            }
+
+
+        }
     }
 
 

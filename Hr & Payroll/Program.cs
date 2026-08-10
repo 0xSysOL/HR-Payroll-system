@@ -183,14 +183,27 @@ namespace Hr___Payroll
             //else
             //    Console.WriteLine("No");
 
-            clsEmployee_BL Employee = new clsEmployee_BL(6);
+            //clsEmployee_BL Employee = new clsEmployee_BL(6);
 
-            Employee.StrEmployee.Salary = 7000;
-            
-            if (Employee.Save())
-                Console.WriteLine("Yes");
-            else
-                Console.WriteLine("No");
+            //Employee.StrEmployee.Salary = 7000;
+
+            //if (Employee.Save())
+            //    Console.WriteLine("Yes");
+            //else
+            //    Console.WriteLine("No");
+
+
+            //Models.Enums.M_eColumnsName.eEmployee[] eEm = {
+            //             M_eColumnsName.eEmployee.EmployeeID,
+            //             M_eColumnsName.eEmployee.EmployeeSalary,
+            //             M_eColumnsName.eEmployee.DepartmentID
+            //};
+
+
+            //clsEmployee_BL.SelectRecords(eEm);
+
+            //clsEmployee_BL.Delete(6);
+
         }
         static void Main(string[] args)
         {

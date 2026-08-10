@@ -1,5 +1,7 @@
 ﻿using Data_Layer.Entities;
 using Models.Entities;
+using Models.Enums;
+using System.Data;
 using static Models.Enums.M_Enums;
 namespace Business___HR.Entities
 {
@@ -55,7 +57,62 @@ namespace Business___HR.Entities
         }
 
 
+        public static DataTable SelectRecords(M_eColumnsName.eEmployee[] eEm)
+        {
+            MEmployee Structure = new MEmployee();
 
+            foreach (M_eColumnsName.eEmployee item in eEm)
+            {
+                switch (item)
+                {
+                    case M_eColumnsName.eEmployee.EmployeeID:
+                        Structure.Employee_ID = -1;
+                        break;
+
+                    case M_eColumnsName.eEmployee.PersonID:
+                        Structure.Person_ID = -1;
+                        break;
+
+                    case M_eColumnsName.eEmployee.ManagerID:
+                        Structure.Manager_ID = -1;
+                        break;
+
+                    case M_eColumnsName.eEmployee.DepartmentID:
+                        Structure.Department_ID = -1;
+                        break;
+
+                    case M_eColumnsName.eEmployee.CreateByUserID:
+                        Structure.CreateByUser_ID = -1;
+                        break;
+
+                    case M_eColumnsName.eEmployee.EmployeeSalary:
+                        Structure.Salary = 0;
+                        break;
+
+                    case M_eColumnsName.eEmployee.EmployeeStatus:
+                        Structure.Status = 0;
+                        break;
+
+                    case M_eColumnsName.eEmployee.HireDate:
+                        Structure.HireDate = DateTime.Now;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            if (eEm.Length > 0)
+                return clsEmployee_DL.SelectRecords(Structure);
+            else
+                return null;
+
+        }
+
+        public static bool Delete(int EmployeeID) 
+        {
+            return clsEmployee_DL.Delete(EmployeeID);
+        }
     }
 
 
