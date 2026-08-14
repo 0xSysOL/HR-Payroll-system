@@ -60,5 +60,13 @@ namespace Data_Layer
 
         }
 
+
+        public class clsQApplication
+        {
+            public static string Add = "AddNewApplication";
+            public static string Update = "UpdateApplication";
+
+        }
+
     }
 }

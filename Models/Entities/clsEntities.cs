@@ -48,14 +48,9 @@ namespace Models.Entities
     public class MApplication
     {
 
-        [ForParametersAttribute("Application ID")]
+        [ForParametersAttribute("ApplicationID")]
         public int? Application_ID { get; set; }
 
-        [ForParametersAttribute("Date")]
-        public DateTime? Date { get; set; }
-
-        [ForParametersAttribute("Last Status Date")]
-        public DateTime? LastStatusDate { get; set; }
 
         /// <summary>
         /// 1 = New. 2 = Canceled. 3 = Completed
@@ -63,13 +58,13 @@ namespace Models.Entities
         [ForParametersAttribute("Status")]
         public byte? Status { get; set; }
 
-        [ForParametersAttribute("App Type ID")]
+        [ForParametersAttribute("AppTypeID")]
         public int? AppType_ID { get; set; }
 
-        [ForParametersAttribute("Create By User ID")]
+        [ForParametersAttribute("CreateByUserID")]
         public int? CreateByUser_ID { get; set; }
 
-        [ForParametersAttribute("Employee ID")]
+        [ForParametersAttribute("EmployeeID")]
         public int? Employee_ID { get; set; }
     }
 
