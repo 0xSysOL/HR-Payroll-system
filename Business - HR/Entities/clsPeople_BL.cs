@@ -130,9 +130,6 @@ namespace Business___HR.Entities
         public static bool IsNationalNoExists(string NationalNo)
         {
 
-
-
-
             return clsPeople_DL.IsNationalNoExists(NationalNo);
 
         }
@@ -156,12 +153,7 @@ namespace Business___HR.Entities
 
         }
 
-        // Update done
-
-
-
-        // Delete
-
+     
 
         public bool Delete(int PersonID)
         {
@@ -170,6 +162,9 @@ namespace Business___HR.Entities
 
             return clsPeople_DL.Delete(PersonID);
         }
+
+
+       
 
     }
 

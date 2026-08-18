@@ -1,15 +1,16 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Models.Entities;
+using System.Collections.Concurrent;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace Data_Layer.Configuration
 {
     public class clsSetting
     {
+        internal static ConcurrentDictionary<Type, PropertyInfo[]> cache = new ConcurrentDictionary<Type, PropertyInfo[]>();
+
+
 
         public static string GetConnectionString()
         {
@@ -19,7 +20,7 @@ namespace Data_Layer.Configuration
 
 
             return ConnectionString;
-            
+
         }
 
         public static SqlConnection GetSqlConnection()

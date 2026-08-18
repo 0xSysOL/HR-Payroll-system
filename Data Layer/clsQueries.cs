@@ -66,6 +66,7 @@ namespace Data_Layer
             public static string Add = "AddNewApplication";
             public static string Update = "UpdateApplication";
 
+            public static string SelectRecords = "SelectRecords_Applications";
         }
 
     }

@@ -31,8 +31,8 @@ namespace Data_Layer.Entities
             {
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQApplication.Update, connection, CommandType.StoredProcedure);
 
-              
-                command.Parameters.AddWithValue("@Status",Structure.Status);
+
+                command.Parameters.AddWithValue("@Status", Structure.Status);
                 command.Parameters.AddWithValue("@ApplicationID", Structure.Application_ID);
 
                 connection.Open();
@@ -44,8 +44,29 @@ namespace Data_Layer.Entities
 
         }
 
+        public static int? GetApplicationID()
+        {
+            // Under Development
+            return null;
+        }
+
+        public static List<MApplication> SelectRecords(int PageNumber, int RowPerPage)
+        {
+            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command
+                    (clsQApplication.SelectRecords, connection, CommandType.StoredProcedure);
+                command.Parameters.AddWithValue("@PageNumber", PageNumber);
+                command.Parameters.AddWithValue("@RowPerPage", RowPerPage);
 
 
+                connection.Open();
+                return  Utilities_DB.ConvertDataReaderToMyStructure<MApplication>(Utilities_DB._SelectRecords_Execute(command));
+            }
+
+
+
+        }
 
 
     }

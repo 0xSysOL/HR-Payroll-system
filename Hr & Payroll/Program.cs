@@ -208,17 +208,19 @@ namespace Hr___Payroll
 
         public static void TestApplication()
         {
-            clsApplication_BL App = new clsApplication_BL(10, M_Enums.eApplicationType.Canceled);
+            //clsApplication_BL App = new clsApplication_BL(10, M_Enums.eApplicationType.Canceled);
+
+
+            ////App.StrApplication.Application_ID = 10;
+            ////App.StrApplication.AppType_ID = 1;
+            ////App.StrApplication.Employee_ID = 7;
+            ////App.StrApplication.CreateByUser_ID = 10;
+
+            //App.Save();
+            List<MApplication> ms = clsApplication_BL.SelectRecords(1, 2);
+
+
             
-            
-            //App.StrApplication.Application_ID = 10;
-            //App.StrApplication.AppType_ID = 1;
-            //App.StrApplication.Employee_ID = 7;
-            //App.StrApplication.CreateByUser_ID = 10;
-
-            App.Save();
-
-
         }
         static void Main(string[] args)
         {

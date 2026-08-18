@@ -3,11 +3,10 @@ using Microsoft.Data.SqlClient;
 using Models.Entities;
 using System.Data;
 using System.Reflection;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Data_Layer
 {
+
     internal class Utilities_DB
     {
 
@@ -28,13 +27,13 @@ namespace Data_Layer
         /// <param name="TextQ"></param>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public static SqlCommand GetSQL_Command(string TextQ, SqlConnection connection,CommandType commandType)
+        public static SqlCommand GetSQL_Command(string TextQ, SqlConnection connection, CommandType commandType)
         {
             SqlCommand command = new SqlCommand(TextQ, connection);
             command.CommandType = commandType;
             return command;
         }
-        
+
 
 
         /// <summary>
@@ -69,15 +68,36 @@ namespace Data_Layer
             return data;
 
         }
-  
+        public static SqlDataReader _SelectRecords_Execute(SqlCommand command)
+        {
+
+
+            SqlDataReader reader = null;
+            try
+            {
+
+                reader = command.ExecuteReader();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+
+            return reader;
+
+        }
+
         public static int? Inserting_Execute(SqlCommand command)
         {
             int? ID = null;
-            try 
+            try
             {
                 ID = Convert.ToInt32(command.ExecuteScalar());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -85,14 +105,8 @@ namespace Data_Layer
             return ID;
         }
 
-        public static string MyReplaceString(string Text, string OldValue, string newValue)
-        {
 
 
-            return Text.Replace(OldValue, newValue);
-        }
-
-     
         /// <summary>
         /// we Should Use This Method For Inserting That We Add 3-4 or more 
         /// parameters Ather wise this Method Nussery to use and
@@ -102,7 +116,7 @@ namespace Data_Layer
         /// <param name="TableOb" >
         /// Table Object If You Want Know What Type Will send From this Method
         /// See Class namespace Models.Entities</param>
-        
+
         public static void AddParametersWithValue(SqlCommand command, object TableOb)
         {
 
@@ -111,22 +125,21 @@ namespace Data_Layer
 
 
             Type Reflection = TableOb.GetType();
-            PropertyInfo []propertyInfo = Reflection.GetProperties();
+            PropertyInfo[] propertyInfo = Reflection.GetProperties();
 
 
-            foreach(var prop in propertyInfo)
+            foreach (var prop in propertyInfo)
             {
                 var MyAttr = prop.GetCustomAttribute<ForParametersAttribute>();
                 if (MyAttr != null && prop.GetValue(TableOb) != null)
                     command.Parameters.AddWithValue(MyAttr.ParameterNameInSQL, prop.GetValue(TableOb));
-                
 
 
             }
 
 
         }
-      
+
 
 
 
@@ -159,14 +172,14 @@ namespace Data_Layer
             Type Reflection = TableOb.GetType();
             PropertyInfo[] propInfo = Reflection.GetProperties();
 
-            foreach(var Property in propInfo)
+            foreach (var Property in propInfo)
             {
 
-                if ( Property.GetValue(TableOb) != null)
+                if (Property.GetValue(TableOb) != null)
                 {
                     var MyAttr = Property.GetCustomAttribute<ForParametersAttribute>();
-                    if(MyAttr != null)
-                    ColumnsName += MyAttr.ParameterNameInSQL + ",";
+                    if (MyAttr != null)
+                        ColumnsName += MyAttr.ParameterNameInSQL + ",";
                 }
             }
 
@@ -174,6 +187,8 @@ namespace Data_Layer
                 return ColumnsName.Remove(ColumnsName.Length - 1);
             else
                 return "";
+
+
         }
 
 
@@ -219,6 +234,106 @@ namespace Data_Layer
 
 
         }
+
+        public static List<string> AddColumnNamesToListFromDR(SqlDataReader dataReader)
+        {
+            List<string> ColumnsName = new List<string>();
+            using (dataReader)
+            {
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    if (dataReader.Read())
+                        ColumnsName.Add(dataReader.GetName(i));
+                    else
+                        return null;
+
+
+                }
+            }
+            return ColumnsName;
+
+
+        }
+
+        static List<T> _ConvertDataReaderToMyStructure<T>(SqlDataReader dataReader, PropertyInfo[] properties)
+        {
+
+            List<T> Data = new List<T>();
+            try
+
+            {
+
+                while (dataReader.Read())
+                {
+                    T _Structure = Activator.CreateInstance<T>();
+
+                    foreach (var property in properties)
+                    {
+
+
+                        var MyAttr = property.GetCustomAttribute<ForReturnFromSql>();
+
+                        for (int i = 0; i < dataReader.FieldCount; i++)
+                        {
+                            if (MyAttr != null && MyAttr.RealNameOfColumnNameInSql == dataReader.GetName(i))
+                            {
+                                property.SetValue(_Structure, dataReader[i]);
+                                break;
+                            }
+
+                        }
+
+
+
+
+                    }
+
+                    Data.Add(_Structure);
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                dataReader.Close();
+            }
+
+            return Data;
+        }
+        public static List<T> ConvertDataReaderToMyStructure<T>(SqlDataReader dataReader)
+        {
+            if (dataReader == null)
+                return null;
+
+
+            if (clsSetting.cache.TryGetValue(typeof(T), out var values))
+            {
+                return _ConvertDataReaderToMyStructure<T>(dataReader, values);
+
+            }
+            else
+            {
+
+
+                Type Reflection = typeof(T);
+                PropertyInfo[] properties = Reflection.GetProperties();
+
+                clsSetting.cache.GetOrAdd(Reflection, properties);
+                return _ConvertDataReaderToMyStructure<T>(dataReader, properties);
+
+            }
+
+
+
+        }
+
+
+
+
+
 
     }
 }

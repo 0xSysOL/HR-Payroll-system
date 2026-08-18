@@ -6,7 +6,7 @@ namespace Business___HR.Entities
     public class clsApplication_BL
     {
 
-       public MApplication StrApplication;
+        public MApplication StrApplication;
         eMode mode;
 
         public clsApplication_BL()
@@ -24,8 +24,7 @@ namespace Business___HR.Entities
 
         }
 
-        // Add
-        // Update
+
         public bool Save()
         {
 
@@ -46,14 +45,21 @@ namespace Business___HR.Entities
 
 
         // GetApplicationByID
-        public int? GetApplicationID()
+        public static int? GetApplicationByID()
         {
             // Under Development
-            return 0;
+            return clsApplication_DL.GetApplicationID();
         }
 
         // Update SelectRecords
         // SelectRecords
+
+        public static List<MApplication> SelectRecords(int PageNumber, int RowPerPage)
+        {
+
+
+            return clsApplication_DL.SelectRecords(PageNumber, RowPerPage);
+        }
 
     }
 

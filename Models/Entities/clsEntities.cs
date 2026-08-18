@@ -6,12 +6,21 @@ namespace Models.Entities
     public class ForParametersAttribute : Attribute
     {
         public string ParameterNameInSQL { get; }
-
         public ForParametersAttribute(string ParameterNameInSQL)
         {
             this.ParameterNameInSQL = ParameterNameInSQL;
         }
     }
+    public class ForReturnFromSql : Attribute
+    {
+        public string RealNameOfColumnNameInSql { get; }
+
+        public ForReturnFromSql(string RealNameOfColumnNameInSql)
+        {
+            this.RealNameOfColumnNameInSql = RealNameOfColumnNameInSql;
+        }
+    }
+
 
     public class MApplicationLogAction
     {
@@ -47,7 +56,7 @@ namespace Models.Entities
 
     public class MApplication
     {
-
+        [ForReturnFromSql("Application ID")]
         [ForParametersAttribute("ApplicationID")]
         public int? Application_ID { get; set; }
 
@@ -55,15 +64,16 @@ namespace Models.Entities
         /// <summary>
         /// 1 = New. 2 = Canceled. 3 = Completed
         /// </summary>
+        [ForReturnFromSql("Status")]
         [ForParametersAttribute("Status")]
         public byte? Status { get; set; }
-
+        [ForReturnFromSql("Application Type ID")]
         [ForParametersAttribute("AppTypeID")]
         public int? AppType_ID { get; set; }
-
+        [ForReturnFromSql("Create By User ID")]
         [ForParametersAttribute("CreateByUserID")]
         public int? CreateByUser_ID { get; set; }
-
+        [ForReturnFromSql("Employee ID")]
         [ForParametersAttribute("EmployeeID")]
         public int? Employee_ID { get; set; }
     }
