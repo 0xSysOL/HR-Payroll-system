@@ -20,10 +20,10 @@ namespace Business___HR.Entities
 
         public int? PersonID
         {
-            get => StrUser.Person_ID != null ? StrUser.Person_ID : -1;
-            set => StrUser.Person_ID = value;
+            get => StrUser.PersonID != null ? StrUser.PersonID : -1;
+            set => StrUser.PersonID = value;
+
         }
-      
         public void SetPassword(string Password) => StrUser.Password = Utilities.Utilities.HashPassword(Password);
 
 
@@ -44,9 +44,9 @@ namespace Business___HR.Entities
 
                 case eMode.Add:
 
-                    StrUser.User_ID = clsUser_DL.Add(StrUser);
-                    mode = (StrUser.User_ID != null) ? eMode.Update : eMode.Add;
-                    return StrUser.User_ID != null;
+                    StrUser.UserID = clsUser_DL.Add(StrUser);
+                    mode = (StrUser.UserID != null) ? eMode.Update : eMode.Add;
+                    return StrUser.UserID != null;
 
 
                 case eMode.Update:
@@ -73,7 +73,7 @@ namespace Business___HR.Entities
                 switch (item)
                 {
                     case eUser.UserID:
-                        Structure.User_ID = -1;
+                        Structure.UserID = -1;
                         break;
                     case eUser.Username:
                         Structure.Username = "";
@@ -88,7 +88,7 @@ namespace Business___HR.Entities
                         break;
 
                     case eUser.PersonID:
-                        Structure.Person_ID = -1;
+                        Structure.PersonID = -1;
                         break;
 
                     default:
@@ -103,6 +103,8 @@ namespace Business___HR.Entities
 
         public static MUser GetUser(int UserID)
         {
+
+            // FIX: Change it to ClassOB
             DataTable data = clsUser_DL.GetUser(UserID);
 
             return Utilities.Utilities.ConvertDataTableToMUser(data);

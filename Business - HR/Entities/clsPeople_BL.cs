@@ -39,8 +39,8 @@ namespace Business___HR.Entities
             {
                 case eMode.Add:
                     // Feat: In Future We Can Call Event To Send ID
-                    StrPerson.Person_ID = clsPeople_DL.Add(StrPerson);
-                    Resutl = StrPerson.Person_ID != null ? true : false;
+                    StrPerson.PersonID = clsPeople_DL.Add(StrPerson);
+                    Resutl = StrPerson.PersonID != null ? true : false;
                     mode = Resutl != false ? eMode.Update : eMode.Add;
                     break;
 
@@ -70,7 +70,7 @@ namespace Business___HR.Entities
                 switch (item)
                 {
                     case M_eColumnsName.ePerson.PersonID:
-                        Structure.Person_ID = -1;
+                        Structure.PersonID = -1;
                         break;
 
                     case M_eColumnsName.ePerson.NationalNo:
@@ -110,7 +110,7 @@ namespace Business___HR.Entities
                         break;
 
                     case M_eColumnsName.ePerson.CountryID:
-                        Structure.Country_ID = -1;
+                        Structure.CountryID = -1;
                         break;
 
                     case M_eColumnsName.ePerson.Address:

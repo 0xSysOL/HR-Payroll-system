@@ -1,4 +1,5 @@
 ﻿using Data_Layer.Entities;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,11 +12,11 @@ namespace Business___HR.Entities
     public class clsCountry_BL
     {
 
-        public static DataTable GetAll()
+        public static List<MCountry> GetData(int PageNumber, int RowPerPage)
         {
 
 
-            return clsCountry_DL.GetAll();
+            return clsCountry_DL.GetData(PageNumber,RowPerPage);
         }
 
 

@@ -8,7 +8,7 @@ namespace Data_Layer.Configuration
 {
     public class clsSetting
     {
-        internal static ConcurrentDictionary<Type, PropertyInfo[]> cache = new ConcurrentDictionary<Type, PropertyInfo[]>();
+        internal static ConcurrentDictionary<string, PropertyInfo[]> cache = new ConcurrentDictionary<string, PropertyInfo[]>();
 
 
 

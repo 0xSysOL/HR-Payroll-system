@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data_Layer.Configuration;
 using Microsoft.Data.SqlClient;
+using Models.Entities;
 using static Data_Layer.Configuration.clsSetting;
 using static Data_Layer.Utilities_DB;
 
@@ -13,17 +14,17 @@ namespace Data_Layer.Entities
 {
     public class clsCountry_DL
     {
-
-        public static DataTable GetAll()
+         
+        public static List<MCountry> GetData(int PageNumber, int RowPerPage)
         {
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
                 SqlCommand command = GetSQL_Command(clsQueries.clsQCountry.GetAll, connection,CommandType.StoredProcedure);
 
-
+                AddPaginationToSqlCommand(command, PageNumber, RowPerPage);
                 connection.Open();
-                return SelectRecords_Execute(command);
+                return ConvertRowsToClassesOB<MCountry>(_SelectRecords_Execute(command));
             
 
             }

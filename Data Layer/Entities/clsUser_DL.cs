@@ -82,7 +82,7 @@ namespace Data_Layer.Entities
 
         }
 
-
+       
         public static DataTable GetUser(int UserID)
         {
 

@@ -3,7 +3,6 @@ using Microsoft.Data.SqlClient;
 using Models.Entities;
 using System.Data;
 using System.Reflection;
-
 namespace Data_Layer
 {
 
@@ -20,6 +19,12 @@ namespace Data_Layer
         }
         #endregion
 
+        public static void AddPaginationToSqlCommand(SqlCommand command, int PageNumber, int RowPerPage)
+        {
+            command.Parameters.AddWithValue("@PageNumber", PageNumber);
+            command.Parameters.AddWithValue("@RowPerPage", RowPerPage);
+
+        }
 
         /// <summary>
         /// initialize SqlCommand
@@ -52,10 +57,7 @@ namespace Data_Layer
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-
-
                     data.Load(reader);
-
                 }
 
             }
@@ -68,25 +70,73 @@ namespace Data_Layer
             return data;
 
         }
-        public static SqlDataReader _SelectRecords_Execute(SqlCommand command)
+
+        /// <summary>
+        /// New Select Record We Will Use This Bec the past its use datatable and we replace it to this method 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static List<Dictionary<string, object>> _SelectRecords_Execute(SqlCommand command)
         {
-
-
-            SqlDataReader reader = null;
-            try
+            List<Dictionary<string, object>> ListDic = new List<Dictionary<string, object>>();
+            using (SqlDataReader reader = command.ExecuteReader())
             {
+                try
+                {
 
-                reader = command.ExecuteReader();
+                    int FieldCount = reader.FieldCount;
+                    while (reader.Read())
+                    {
+                        Dictionary<string, object> row = new Dictionary<string, object>();
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            row.Add(reader.GetName(i), reader.GetValue(i));
+                        }
+                        ListDic.Add(row);
+                    }
 
 
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
             }
-            catch (Exception ex)
+
+            return ListDic;
+
+        }
+        public static Dictionary<string, object> _SelectRecordsWithWhere_Execute<ClassType>(SqlCommand command)
+        {
+            Dictionary<string, object> Dic = new Dictionary<string, object>();
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                Console.WriteLine(ex.Message);
+                try
+                {
 
+                    int FieldCount = reader.FieldCount;
+                    while (reader.Read())
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                            Dic.Add(reader.GetName(i), reader.GetValue(i));
+
+                    }
+
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
             }
 
-            return reader;
+            return Dic;
 
         }
 
@@ -130,9 +180,9 @@ namespace Data_Layer
 
             foreach (var prop in propertyInfo)
             {
-                var MyAttr = prop.GetCustomAttribute<ForParametersAttribute>();
+                var MyAttr = prop.GetCustomAttribute<DbColumnAttribute>();
                 if (MyAttr != null && prop.GetValue(TableOb) != null)
-                    command.Parameters.AddWithValue(MyAttr.ParameterNameInSQL, prop.GetValue(TableOb));
+                    command.Parameters.AddWithValue(MyAttr.ColumnName, prop.GetValue(TableOb));
 
 
             }
@@ -177,9 +227,9 @@ namespace Data_Layer
 
                 if (Property.GetValue(TableOb) != null)
                 {
-                    var MyAttr = Property.GetCustomAttribute<ForParametersAttribute>();
+                    var MyAttr = Property.GetCustomAttribute<DbColumnAttribute>();
                     if (MyAttr != null)
-                        ColumnsName += MyAttr.ParameterNameInSQL + ",";
+                        ColumnsName += MyAttr.ColumnName + ",";
                 }
             }
 
@@ -190,8 +240,6 @@ namespace Data_Layer
 
 
         }
-
-
 
         public static object Scalar_Execute(SqlCommand command)
         {
@@ -235,83 +283,109 @@ namespace Data_Layer
 
         }
 
-        public static List<string> AddColumnNamesToListFromDR(SqlDataReader dataReader)
-        {
-            List<string> ColumnsName = new List<string>();
-            using (dataReader)
-            {
-                for (int i = 0; i < dataReader.FieldCount; i++)
-                {
-                    if (dataReader.Read())
-                        ColumnsName.Add(dataReader.GetName(i));
-                    else
-                        return null;
 
+        static void AddToCacheDictionary(string ClassName, PropertyInfo[] properties) => clsSetting.cache.GetOrAdd(ClassName, properties);
 
-                }
-            }
-            return ColumnsName;
-
-
-        }
-
-        static List<T> _ConvertDataReaderToMyStructure<T>(SqlDataReader dataReader, PropertyInfo[] properties)
+        /// <summary>
+        /// This Method work when you have rows you get it from database and you want to convert it to
+        /// structure you create it like (MPeople or MEmployee).
+        /// and this method take two parameters (Data > Rows,properties)
+        /// the properties came from base method (_ConvertRowsToClassesOB)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Rows">Data That Came From Database</param>
+        /// <param name="properties">Reflection for The Structure You Send it from <T> </param>
+        /// <returns>Return All Data As List</returns>
+        static List<T> _ConvertRowsToClassesOB<T>(List<Dictionary<string, object>> Rows, PropertyInfo[] properties)
         {
 
             List<T> Data = new List<T>();
             try
-
             {
 
-                while (dataReader.Read())
+                for (int i = 0; i < Rows.Count; i++)
                 {
-                    T _Structure = Activator.CreateInstance<T>();
+                    T Class = Activator.CreateInstance<T>();
 
-                    foreach (var property in properties)
+                    foreach (var item in properties)
                     {
-
-
-                        var MyAttr = property.GetCustomAttribute<ForReturnFromSql>();
-
-                        for (int i = 0; i < dataReader.FieldCount; i++)
-                        {
-                            if (MyAttr != null && MyAttr.RealNameOfColumnNameInSql == dataReader.GetName(i))
-                            {
-                                property.SetValue(_Structure, dataReader[i]);
-                                break;
-                            }
-
-                        }
-
-
-
+                        Dictionary<string, object> pairs = Rows[i];
+                        if (pairs.TryGetValue(item.Name, out var value))
+                            item.SetValue(Class, value != DBNull.Value ? value : null);
+                        else
+                            item.SetValue(Class, null);
 
                     }
-
-                    Data.Add(_Structure);
-
+                    Data.Add(Class);
                 }
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return null;
             }
-            finally
-            {
-                dataReader.Close();
-            }
+
 
             return Data;
         }
-        public static List<T> ConvertDataReaderToMyStructure<T>(SqlDataReader dataReader)
+
+        /// <summary>
+        /// this method behoifer work that work with static cache it is store properties
+        /// we stored after first reflection it good to perfromnce,
+        /// and we do not repeat to each call reflect the class everey time
+        /// </summary>
+        /// <typeparam name="T"> Type of class</typeparam>
+        /// <param name="Rows">Data</param>
+        /// <returns></returns>
+        static List<T> _ConvertRowsToClassesOB<T>(List<Dictionary<string, object>> Rows)
         {
-            if (dataReader == null)
+
+            List<T> Data = new List<T>();
+            PropertyInfo[] properties = clsSetting.cache.TryGetValue(typeof(T).Name, out PropertyInfo[] cachedProps)
+                ? cachedProps : Array.Empty<PropertyInfo>();
+
+            try
+
+            {
+                for (int i = 0; i < Rows.Count; i++)
+                {
+                    T Class = Activator.CreateInstance<T>();
+
+                    foreach (var item in properties)
+                    {
+                        Dictionary<string, object> pairs = Rows[i];
+                        if (pairs.TryGetValue(item.Name, out var value))
+                            item.SetValue(Class, value);
+                        else
+                            item.SetValue(Class, null);
+
+
+                    }
+
+                    Data.Add(Class);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
+
+            return Data;
+        }
+        public static List<T> ConvertRowsToClassesOB<T>(List<Dictionary<string, object>> Rows)
+        {
+            if (Rows == null || Rows.Count == 0)
                 return null;
 
 
-            if (clsSetting.cache.TryGetValue(typeof(T), out var values))
+            if (clsSetting.cache.TryGetValue(typeof(T).Name, out var values))
             {
-                return _ConvertDataReaderToMyStructure<T>(dataReader, values);
+                return _ConvertRowsToClassesOB<T>(Rows);
 
             }
             else
@@ -320,16 +394,16 @@ namespace Data_Layer
 
                 Type Reflection = typeof(T);
                 PropertyInfo[] properties = Reflection.GetProperties();
+                AddToCacheDictionary(typeof(T).Name, properties);
 
-                clsSetting.cache.GetOrAdd(Reflection, properties);
-                return _ConvertDataReaderToMyStructure<T>(dataReader, properties);
+                return _ConvertRowsToClassesOB<T>(Rows, properties);
 
             }
 
-
-
         }
 
+
+        public static Class? GetFirstOBFromList<Class>(List<Class> OB)=> OB.FirstOrDefault();
 
 
 

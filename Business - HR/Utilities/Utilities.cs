@@ -17,7 +17,7 @@ namespace Business___HR.Utilities
             MPeople Person = new MPeople();
             try
             {
-                Person.Person_ID = (int)data.Rows[0]["PersonID"];
+                Person.PersonID = (int)data.Rows[0]["PersonID"];
                 Person.NationalNo = data.Rows[0]["NationalNo"].ToString();
                 Person.FirstName = data.Rows[0]["FirstName"].ToString();
                 Person.SecondName = data.Rows[0]["SecondName"].ToString();
@@ -29,7 +29,7 @@ namespace Business___HR.Utilities
                 Person.Address = data.Rows[0]["Address"].ToString();
                 Person.Email = data.Rows[0]["Email"].ToString();
                 Person.ImagePath = data.Rows[0]["ImagePath"].ToString();
-                Person.Country_ID = (int)data.Rows[0]["CountryID"];
+                Person.CountryID = (int)data.Rows[0]["CountryID"];
             }
             catch
             {
@@ -49,11 +49,11 @@ namespace Business___HR.Utilities
             {
                 var row = data.Rows[0];
 
-                employee.Employee_ID =     row["EmployeeID"] != DBNull.Value ?     (int?)row["EmployeeID"] : null;
-                employee.Person_ID =       row["PersonID"] != DBNull.Value ?       (int?)row["PersonID"] : null;
-                employee.Manager_ID =      row["ManagerID"] != DBNull.Value ?      (int?)row["ManagerID"] : null;
-                employee.Department_ID =   row["DepartmentID"] != DBNull.Value ?   (int?)row["DepartmentID"] : null;
-                employee.CreateByUser_ID = row["CreateByUserID"] != DBNull.Value ? (int?)row["CreateByUserID"] : null;
+                employee.EmployeeID =     row["EmployeeID"] != DBNull.Value ?     (int?)row["EmployeeID"] : null;
+                employee.PersonID =       row["PersonID"] != DBNull.Value ?       (int?)row["PersonID"] : null;
+                employee.ManagerID =      row["ManagerID"] != DBNull.Value ?      (int?)row["ManagerID"] : null;
+                employee.DepartmentID =   row["DepartmentID"] != DBNull.Value ?   (int?)row["DepartmentID"] : null;
+                employee.CreateByUserID = row["CreateByUserID"] != DBNull.Value ? (int?)row["CreateByUserID"] : null;
                 employee.Salary =          row["EmployeeSalary"] != DBNull.Value ?         (decimal?)row["EmployeeSalary"] : null;
                 employee.Status =          row["EmployeeStatus"] != DBNull.Value ?         (byte?)row["EmployeeStatus"] : null;
                 employee.HireDate =        row["HireDate"] != DBNull.Value ?       (DateTime?)row["HireDate"] : null;
@@ -74,11 +74,11 @@ namespace Business___HR.Utilities
 
             try
             {
-                user.User_ID = Convert.ToInt32(data.Rows[0]["UserID"]);
+                user.UserID = Convert.ToInt32(data.Rows[0]["UserID"]);
                 user.Username = data.Rows[0]["Username"].ToString();
                 user.Password = data.Rows[0]["Password"].ToString();
                 user.IsActive = Convert.ToBoolean(data.Rows[0]["IsActive"]);
-                user.Person_ID = Convert.ToInt32(data.Rows[0]["PersonID"]);
+                user.PersonID = Convert.ToInt32(data.Rows[0]["PersonID"]);
             }catch
             {
                 Console.Write("Errore In Methode:" + "ConvertDataTableToMUser");

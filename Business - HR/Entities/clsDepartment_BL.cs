@@ -21,9 +21,9 @@ namespace Business___HR.Entities
         public bool Add()
         {
 
-            DepartmentOB.Department_ID = clsDepartment_DL.Add(DepartmentOB);
+            DepartmentOB.DepartmentID = clsDepartment_DL.Add(DepartmentOB);
 
-            return DepartmentOB.Department_ID != null ? true : false;
+            return DepartmentOB.DepartmentID != null ? true : false;
 
 
 

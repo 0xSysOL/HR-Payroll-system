@@ -1,8 +1,7 @@
 ﻿using Business___HR.Entities;
 using Models.Entities;
-using Models.Enums;
 using System.Data;
-using System.Text;
+using System.Diagnostics;
 namespace Hr___Payroll
 {
     internal class Program
@@ -13,21 +12,18 @@ namespace Hr___Payroll
         public static void TestCountryClass()
         {
 
-            DataTable data = clsCountry_BL.GetAll();
+            List<MCountry> data = clsCountry_BL.GetData(1, 23);
 
 
-            foreach(DataRow row in data.Rows)
-            {
+            var id = data.Select(n => n.CountryID);
 
-                Console.WriteLine(row["Country Name"]);
-
-            }
+            Console.WriteLine(string.Join(",", id));
         }
         public static void TestDepartment()
         {
 
             MDepartment department = new MDepartment();
-            department.Department_Name = "Done";
+            department.DepartmentName = "Done";
 
 
             clsDepartment_BL clsDepartment_ = new clsDepartment_BL(department);
@@ -51,7 +47,7 @@ namespace Hr___Payroll
             StrPerson.Phone = "+9647509876543";
             StrPerson.Email = "fatima.hassan@example.com";
             StrPerson.ImagePath = "9876543210123";
-            StrPerson.Country_ID = 1;
+            StrPerson.CountryID = 1;
 
             clsPeople_BL clsPeople_BL = new clsPeople_BL(StrPerson);
 
@@ -61,7 +57,7 @@ namespace Hr___Payroll
 
 
 
-            //DataTable data = clsPeople_BL.GetAll();
+            //DataTable data = clsPeople_BL.GetData();
 
 
             //foreach (DataRow row in data.Rows)
@@ -110,8 +106,8 @@ namespace Hr___Payroll
         public static void TestUser()
         {
 
-            
-         
+
+
             //clsUser_BL clsUser = new clsUser_BL();
             //clsUser.SetUsername("User1");
             //clsUser.SetIsActive(true);
@@ -121,7 +117,7 @@ namespace Hr___Payroll
             //bool Re = clsUser.Save();
 
 
-            //DataTable data = clsUser_BL.GetAll();
+            //DataTable data = clsUser_BL.GetData();
 
             //foreach(DataRow row in data.Rows)
             //{
@@ -164,10 +160,10 @@ namespace Hr___Payroll
         {
             //clsEmployee_BL Employee = new clsEmployee_BL();
 
-            //Employee.StrEmployee.Person_ID = 1;
-            //Employee.StrEmployee.Manager_ID = null;
-            //Employee.StrEmployee.Department_ID = 1;
-            //Employee.StrEmployee.CreateByUser_ID = 10;
+            //Employee.StrEmployee.PersonID = 1;
+            //Employee.StrEmployee.ManagerID = null;
+            //Employee.StrEmployee.DepartmentID = 1;
+            //Employee.StrEmployee.CreateByUserID = 10;
             //Employee.StrEmployee.Salary = 75000.00m;
             //Employee.StrEmployee.Status = 1;
             //Employee.StrEmployee.HireDate = new DateTime(2023, 6, 15);
@@ -203,6 +199,7 @@ namespace Hr___Payroll
             //clsEmployee_BL.SelectRecords(eEm);
 
             //clsEmployee_BL.Delete(6);
+            clsEmployee_BL Employee = new clsEmployee_BL(7);
 
         }
 
@@ -213,21 +210,31 @@ namespace Hr___Payroll
 
             ////App.StrApplication.Application_ID = 10;
             ////App.StrApplication.AppType_ID = 1;
-            ////App.StrApplication.Employee_ID = 7;
-            ////App.StrApplication.CreateByUser_ID = 10;
+            ////App.StrApplication.EmployeeID = 7;
+            ////App.StrApplication.CreateByUserID = 10;
 
             //App.Save();
-            List<MApplication> ms = clsApplication_BL.SelectRecords(1, 2);
+            //List<MApplication> ms = clsApplication_BL.SelectRecords(1, 3);
+            //ms = clsApplication_BL.SelectRecords(1, 3);
+            Stopwatch t1 = Stopwatch.StartNew();
+
+            MApplication d = clsApplication_BL.GetApplicationByID(3);
+            t1.Stop();
+            Console.WriteLine("MS:"+t1.ElapsedMilliseconds);
+            Stopwatch t2 = Stopwatch.StartNew();
+
+            MApplication d2 = clsApplication_BL.GetApplicationByID(3);
+            t2.Stop();
+            Console.WriteLine("MS:" + t2.ElapsedMilliseconds);
 
 
-            
         }
         static void Main(string[] args)
         {
 
 
 
-            TestApplication();
+            TestEmployee();
 
 
         }

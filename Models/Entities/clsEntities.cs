@@ -3,330 +3,306 @@
 namespace Models.Entities
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class ForParametersAttribute : Attribute
+    public class DbColumnAttribute : Attribute
     {
-        public string ParameterNameInSQL { get; }
-        public ForParametersAttribute(string ParameterNameInSQL)
+        public string ColumnName { get; }
+        public DbColumnAttribute(string ColumnName)
         {
-            this.ParameterNameInSQL = ParameterNameInSQL;
+            this.ColumnName = ColumnName;
         }
     }
-    public class ForReturnFromSql : Attribute
-    {
-        public string RealNameOfColumnNameInSql { get; }
 
-        public ForReturnFromSql(string RealNameOfColumnNameInSql)
-        {
-            this.RealNameOfColumnNameInSql = RealNameOfColumnNameInSql;
-        }
-    }
 
 
     public class MApplicationLogAction
     {
+        [DbColumnAttribute("ActionID")]
+        public int? ActionID { get; set; }
 
-        [ForParametersAttribute("Action ID")]
-        public int? Action_ID { get; set; }
+        [DbColumnAttribute("ApplicationID")]
+        public int? ApplicationID { get; set; }
 
-        [ForParametersAttribute("Application ID")]
-        public int? Application_ID { get; set; }
+        [DbColumnAttribute("UserID")]
+        public int? UserID { get; set; }
 
-        [ForParametersAttribute("User ID")]
-        public int? User_ID { get; set; }
-
-        [ForParametersAttribute("Action Date")]
+        [DbColumnAttribute("ActionDate")]
         public DateTime? ActionDate { get; set; }
 
         /// <summary>
         /// 1 = New. 2 = Canceled. 3 = Completed
         /// </summary>
-        [ForParametersAttribute("Application Status")]
+        [DbColumnAttribute("ApplicationStatus")]
         public byte? ApplicationStatus { get; set; }
+
+        [DbColumnAttribute("ActionTriggerTypeID")]
+        public int? ActionTriggerTypeID { get; set; }
     }
 
     public class MApplicationType
     {
+        [DbColumnAttribute("ApplicationTypeID")]
+        public int? ApplicationTypeID { get; set; }
 
-        [ForParametersAttribute("App Type ID")]
-        public  int? AppType_ID { get; set; }
-
-        [ForParametersAttribute("Title")]
+        [DbColumnAttribute("Title")]
         public string? Title { get; set; }
     }
 
     public class MApplication
     {
-        [ForReturnFromSql("Application ID")]
-        [ForParametersAttribute("ApplicationID")]
-        public int? Application_ID { get; set; }
-
+        [DbColumnAttribute("ApplicationID")]
+        public int? ApplicationID { get; set; }
 
         /// <summary>
         /// 1 = New. 2 = Canceled. 3 = Completed
         /// </summary>
-        [ForReturnFromSql("Status")]
-        [ForParametersAttribute("Status")]
+        [DbColumnAttribute("Status")]
         public byte? Status { get; set; }
-        [ForReturnFromSql("Application Type ID")]
-        [ForParametersAttribute("AppTypeID")]
-        public int? AppType_ID { get; set; }
-        [ForReturnFromSql("Create By User ID")]
-        [ForParametersAttribute("CreateByUserID")]
-        public int? CreateByUser_ID { get; set; }
-        [ForReturnFromSql("Employee ID")]
-        [ForParametersAttribute("EmployeeID")]
-        public int? Employee_ID { get; set; }
+
+        [DbColumnAttribute("ApplicationTypeID")]
+        public int? ApplicationTypeID { get; set; }
+
+        [DbColumnAttribute("CreateByUserID")]
+        public int? CreateByUserID { get; set; }
+
+        [DbColumnAttribute("EmployeeID")]
+        public int? EmployeeID { get; set; }
     }
 
     public class MAttendance
     {
+        [DbColumnAttribute("AttendanceID")]
+        public int? AttendanceID { get; set; }
 
-        [ForParametersAttribute("Attendance ID")]
-        public int? Attendance_ID { get; set; }
+        [DbColumnAttribute("AttendanceDate")]
+        public DateTime? AttendanceDate { get; set; }
 
-        [ForParametersAttribute("Attendance Date")]
-        public DateTime?  Attendance_Date { get; set; }
-
-        [ForParametersAttribute("Check In Time")]
+        [DbColumnAttribute("CheckInTime")]
         public DateTime? CheckInTime { get; set; }
 
-        [ForParametersAttribute("Check Out Time")]
+        [DbColumnAttribute("CheckOutTime")]
         public DateTime? CheckOutTime { get; set; }
 
-        [ForParametersAttribute("Employee ID")]
-        public int? Employee_ID { get; set; }
+        [DbColumnAttribute("EmployeeID")]
+        public int? EmployeeID { get; set; }
     }
 
     public class MCountry
     {
+        [DbColumnAttribute("CountryID")]
+        public int? CountryID { get; set; }
 
-        [ForParametersAttribute("Country ID")]
-        public int? Country_ID { get; set; }
-
-        [ForParametersAttribute("Country Name")]
+        [DbColumnAttribute("CountryName")]
         public string? CountryName { get; set; }
     }
 
     public class MDepartment
     {
+        [DbColumnAttribute("DepartmentID")]
+        public int? DepartmentID { get; set; }
 
-        [ForParametersAttribute("DepartmentID")]
-        public int? Department_ID { get; set; }
-
-        [ForParametersAttribute("DepartmentName")]
-        public string? Department_Name { get; set; }
+        [DbColumnAttribute("DepartmentName")]
+        public string? DepartmentName { get; set; }
     }
-     
+
     public class MEmployee
     {
+        [DbColumnAttribute("EmployeeID")]
+        public int? EmployeeID { get; set; }
 
-        [ForParametersAttribute("EmployeeID")]
-        public int? Employee_ID { get; set; }
+        [DbColumnAttribute("PersonID")]
+        public int? PersonID { get; set; }
 
-        [ForParametersAttribute("PersonID")]
-        public int? Person_ID { get; set; }
+        [DbColumnAttribute("ManagerID")]
+        public int? ManagerID { get; set; }
 
-        [ForParametersAttribute("ManagerID")]
-        public int? Manager_ID { get; set; }
+        [DbColumnAttribute("DepartmentID")]
+        public int? DepartmentID { get; set; }
 
-        [ForParametersAttribute("DepartmentID")]
-        public int? Department_ID { get; set; }
+        [DbColumnAttribute("CreateByUserID")]
+        public int? CreateByUserID { get; set; }
 
-        [ForParametersAttribute("CreateByUserID")]
-        public int? CreateByUser_ID { get; set; }
-
-        [ForParametersAttribute("Salary")]
+        [DbColumnAttribute("EmployeeSalary")]
         public decimal? Salary { get; set; }
 
         /// <summary>
         /// 1 = Active. 2 = Suspended. 3 = Terminated.
         /// </summary>
-        [ForParametersAttribute("Status")]
+        [DbColumnAttribute("EmployeeStatus")]
         public byte? Status { get; set; }
 
-        [ForParametersAttribute("HireDate")]
+        [DbColumnAttribute("HireDate")]
         public DateTime? HireDate { get; set; }
     }
 
     public class MMonthly_Payroll
     {
+        [DbColumnAttribute("MonthlyPayrollID")]
+        public int? MonthlyPayrollID { get; set; }
 
-        [ForParametersAttribute("Monthly Payroll ID")]
-        public int? M_Payroll_ID { get; set; }
+        [DbColumnAttribute("BaseSalary")]
+        public decimal? BaseSalary { get; set; }
 
-        [ForParametersAttribute("Base Salary")]
-        public decimal? Base_Salary { get; set; }
+        [DbColumnAttribute("SalaryDeduction")]
+        public decimal? SalaryDeduction { get; set; }
 
-        [ForParametersAttribute("Salary Deduction")]
-        public decimal? Salary_Deduction { get; set; }
+        [DbColumnAttribute("NetSalary")]
+        public decimal? NetSalary { get; set; }
 
-        [ForParametersAttribute("Net Salary")]
-        public decimal? Net_Salary { get; set; }
-
-        [ForParametersAttribute("Create Date")]
-        public DateTime? Create_Date { get; set; }
+        [DbColumnAttribute("CreateDate")]
+        public DateTime? CreateDate { get; set; }
 
         /// <summary>
         /// 1 = New. 2 = Canceled. 3 = Completed
         /// </summary>
-        [ForParametersAttribute("Status")]
+        [DbColumnAttribute("Status")]
         public byte? Status { get; set; }
 
-        [ForParametersAttribute("Report ID")]
-        public int? Report_ID { get; set; }
+        [DbColumnAttribute("ReportID")]
+        public int? ReportID { get; set; }
 
-        [ForParametersAttribute("Completed By User ID")]
-        public int? CompletedByUser_ID { get; set; }
+        [DbColumnAttribute("CompletedByUserID")]
+        public int? CompletedByUserID { get; set; }
 
-        [ForParametersAttribute("Employee ID")]
-        public int? Employee_ID { get; set; }
+        [DbColumnAttribute("EmployeeID")]
+        public int? EmployeeID { get; set; }
     }
 
     public class MPayroll_Report
     {
+        [DbColumnAttribute("PayrollReportID")]
+        public int? PayrollReportID { get; set; }
 
-        [ForParametersAttribute("Payroll Report ID")]
-        public int? PayrollR_ID { get; set; }
+        [DbColumnAttribute("FinancialDate")]
+        public DateTime? FinancialDate { get; set; }
 
-        [ForParametersAttribute("Financial Date")]
-        public DateTime? Financial_Date { get; set; }
-
-        [ForParametersAttribute("Date Of Create Report")]
+        [DbColumnAttribute("DateOfCreateReport")]
         public DateTime? DateOfCreateReport { get; set; }
 
-        [ForParametersAttribute("Create By User ID")]
+        [DbColumnAttribute("CreateByUserID")]
         public int? CreateByUserID { get; set; }
     }
 
     public class MPeople
     {
+        [DbColumnAttribute("PersonID")]
+        public int? PersonID { get; set; }
 
-        [ForParametersAttribute("PersonID")]
-        public int? Person_ID { get; set; }
-
-        [ForParametersAttribute("NationalNo")]
+        [DbColumnAttribute("NationalNo")]
         public string? NationalNo { get; set; }
 
-        [ForParametersAttribute("FirstName")]
+        [DbColumnAttribute("FirstName")]
         public string? FirstName { get; set; }
 
-        [ForParametersAttribute("SecondName")]
+        [DbColumnAttribute("SecondName")]
         public string? SecondName { get; set; }
 
-        [ForParametersAttribute("ThirdName")]
+        [DbColumnAttribute("ThirdName")]
         public string? ThirdName { get; set; }
 
-        [ForParametersAttribute("LastName")]
+        [DbColumnAttribute("LastName")]
         public string? LastName { get; set; }
 
-        [ForParametersAttribute("DateOfBirth")]
+        [DbColumnAttribute("DateOfBirth")]
         public DateTime? DateOfBirth { get; set; }
 
-        [ForParametersAttribute("Gender")]
+        [DbColumnAttribute("Gender")]
         public byte? Gender { get; set; }
 
-        [ForParametersAttribute("Address")]
+        [DbColumnAttribute("Address")]
         public string? Address { get; set; }
 
-        [ForParametersAttribute("PhoneNumber")]
+        [DbColumnAttribute("PhoneNumber")]
         public string? Phone { get; set; }
 
-        [ForParametersAttribute("Email")]
+        [DbColumnAttribute("Email")]
         public string? Email { get; set; }
 
-        [ForParametersAttribute("ImagePath")]
+        [DbColumnAttribute("ImagePath")]
         public string? ImagePath { get; set; }
 
-        [ForParametersAttribute("CountryID")]
-        public int? Country_ID { get; set; }
+        [DbColumnAttribute("CountryID")]
+        public int? CountryID { get; set; }
     }
 
     public class MTermination
     {
-
-        [ForParametersAttribute("Termination ID")]
-        public int? Termination_ID { get; set; }
+        [DbColumnAttribute("TerminationID")]
+        public int? TerminationID { get; set; }
 
         /// <summary>
         /// 1 = Resignation. 2 = Termination. 3 = Contract Expiration.
         /// </summary>
-        [ForParametersAttribute("Termination Reason")]
-        public byte? Termination_Reason { get; set; }
+        [DbColumnAttribute("TerminationReason")]
+        public byte? TerminationReason { get; set; }
 
-        [ForParametersAttribute("Termination Time")]
-        public DateTime? Termination_Time { get; set; }
+        [DbColumnAttribute("TerminationDate")]
+        public DateTime? TerminationDate { get; set; }
 
-        [ForParametersAttribute("Description")]
+        [DbColumnAttribute("Description")]
         public string? Description { get; set; }
 
-        [ForParametersAttribute("Employee ID")]
-        public int? Employee_ID { get; set; }
+        [DbColumnAttribute("EmployeeID")]
+        public int? EmployeeID { get; set; }
 
-        [ForParametersAttribute("Create By User ID")]
-        public int? CreateByUser_ID { get; set; }
+        [DbColumnAttribute("CreateByUserID")]
+        public int? CreateByUserID { get; set; }
     }
 
     public class MUser
     {
+        [DbColumnAttribute("UserID")]
+        public int? UserID { get; set; }
 
-        [ForParametersAttribute("UserID")]
-        public int? User_ID { get; set; }
-
-        [ForParametersAttribute("Username")]
+        [DbColumnAttribute("Username")]
         public string? Username { get; set; }
 
-        [ForParametersAttribute("Password")]
+        [DbColumnAttribute("Password")]
         public string? Password { get; set; }
 
         /// <summary>
         /// 1 = Active.
         /// 0 = Not Active.
         /// </summary>
-        [ForParametersAttribute("IsActive")]
+        [DbColumnAttribute("IsActive")]
         public bool? IsActive { get; set; }
 
-        [ForParametersAttribute("PersonID")]
-        public int? Person_ID { get; set; }
+        [DbColumnAttribute("PersonID")]
+        public int? PersonID { get; set; }
     }
 
     public class MVacation_Type
     {
+        [DbColumnAttribute("VacationTypeID")]
+        public int? VacationTypeID { get; set; }
 
-        [ForParametersAttribute("VacationType ID")]
-        public int? VacationType_ID { get; set; }
-
-        [ForParametersAttribute("Title")]
+        [DbColumnAttribute("Title")]
         public string? Title { get; set; }
 
-        [ForParametersAttribute("Days")]
+        [DbColumnAttribute("Days")]
         public byte? Days { get; set; }
     }
 
     public class MVacation
     {
+        [DbColumnAttribute("VacationID")]
+        public int? VacationID { get; set; }
 
-        [ForParametersAttribute("Vacation ID")]
-        public int? Vacation_ID { get; set; }
-
-        [ForParametersAttribute("Begin Date")]
+        [DbColumnAttribute("BeginDate")]
         public DateTime? BeginDate { get; set; }
 
-        [ForParametersAttribute("End Date")]
-        public DateTime?  EndDate { get; set; }
+        [DbColumnAttribute("EndDate")]
+        public DateTime? EndDate { get; set; }
 
-        [ForParametersAttribute("Actual Days")]
+        [DbColumnAttribute("ActualDays")]
         public byte? ActualDays { get; set; }
 
-        [ForParametersAttribute("Vacation Reason")]
+        [DbColumnAttribute("VacationReason")]
         public string? VacationReason { get; set; }
 
-        [ForParametersAttribute("Application ID")]
-        public int? Application_ID { get; set; }
+        [DbColumnAttribute("ApplicationID")]
+        public int? ApplicationID { get; set; }
 
-        [ForParametersAttribute("VacationType ID")]
-        public int? VacationType_ID { get; set; }
-
-
-
+        [DbColumnAttribute("VacationTypeID")]
+        public int? VacationTypeID { get; set; }
     }
 }

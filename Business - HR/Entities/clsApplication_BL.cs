@@ -19,7 +19,7 @@ namespace Business___HR.Entities
         {
             mode = eMode.Update;
             StrApplication.Status = (byte)type;
-            StrApplication.Application_ID = ApplicationID;
+            StrApplication.ApplicationID = ApplicationID;
 
 
         }
@@ -32,8 +32,8 @@ namespace Business___HR.Entities
             {
 
                 case eMode.Add:
-                    StrApplication.Application_ID = clsApplication_DL.Add(StrApplication);
-                    return StrApplication.Application_ID != null;
+                    StrApplication.ApplicationID = clsApplication_DL.Add(StrApplication);
+                    return StrApplication.ApplicationID != null;
 
                 case eMode.Update:
                     return clsApplication_DL.Update(StrApplication);
@@ -44,12 +44,7 @@ namespace Business___HR.Entities
         }
 
 
-        // GetApplicationByID
-        public static int? GetApplicationByID()
-        {
-            // Under Development
-            return clsApplication_DL.GetApplicationID();
-        }
+       
 
         // Update SelectRecords
         // SelectRecords
@@ -57,9 +52,16 @@ namespace Business___HR.Entities
         public static List<MApplication> SelectRecords(int PageNumber, int RowPerPage)
         {
 
-
             return clsApplication_DL.SelectRecords(PageNumber, RowPerPage);
         }
+        public static MApplication GetApplicationByID(int ID)
+        {
+
+            return clsApplication_DL.GetApplication(ID);
+        }
+
+
+
 
     }
 
