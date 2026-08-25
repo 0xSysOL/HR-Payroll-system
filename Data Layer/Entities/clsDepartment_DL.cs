@@ -15,7 +15,7 @@ namespace Data_Layer.Entities
             {
                 SqlCommand command = GetSQL_Command(clsQDepartment.Add, connection,CommandType.StoredProcedure);
 
-                AddParametersWithValue(command, Ob_Department);
+                AddParametersWithValue<MDepartment>(command, Ob_Department);
 
                 connection.Open();
 

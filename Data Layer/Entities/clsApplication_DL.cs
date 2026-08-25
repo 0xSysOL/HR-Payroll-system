@@ -17,7 +17,7 @@ namespace Data_Layer.Entities
             {
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQApplication.Add, connection, CommandType.StoredProcedure);
 
-                Utilities_DB.AddParametersWithValue(command, Structure);
+                Utilities_DB.AddParametersWithValue<MApplication>(command, Structure);
                 connection.Open();
                 return Convert.ToInt32(Utilities_DB.Scalar_Execute(command));
 

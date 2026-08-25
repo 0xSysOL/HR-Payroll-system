@@ -17,7 +17,7 @@ namespace Data_Layer.Entities
             {
 
                 SqlCommand command = GetSQL_Command(clsQEmployee.Add, connection, CommandType.StoredProcedure);
-                AddParametersWithValue(command, Structure);
+                AddParametersWithValue<MEmployee>(command, Structure);
                 AddValueToManagerID(command, Structure.ManagerID);
                 connection.Open();
                 object Result = Scalar_Execute(command);
@@ -37,7 +37,7 @@ namespace Data_Layer.Entities
                 SqlCommand command = GetSQL_Command(clsQEmployee.Update, connection, CommandType.StoredProcedure);
 
 
-                AddParametersWithValue(command, Structure);
+                AddParametersWithValue<MEmployee>(command, Structure);
                 AddValueToManagerID(command, Structure.ManagerID);
 
                 connection.Open();

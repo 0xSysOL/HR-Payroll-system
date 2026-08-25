@@ -166,17 +166,8 @@ namespace Data_Layer
         /// <param name="TableOb" >
         /// Table Object If You Want Know What Type Will send From this Method
         /// See Class namespace Models.Entities</param>
-
-        public static void AddParametersWithValue(SqlCommand command, object TableOb)
+        private static void _AddParametersWithValue(SqlCommand command, object TableOb, PropertyInfo[] propertyInfo)
         {
-
-            if (TableOb == null || command == null)
-                return;
-
-
-            Type Reflection = TableOb.GetType();
-            PropertyInfo[] propertyInfo = Reflection.GetProperties();
-
 
             foreach (var prop in propertyInfo)
             {
@@ -186,6 +177,25 @@ namespace Data_Layer
 
 
             }
+        }
+        public static void AddParametersWithValue<Class>(SqlCommand command, object TableOb)
+        {
+
+            if (TableOb == null || command == null)
+                return;
+
+            if (clsSetting.cache.TryGetValue(typeof(Class).Name,out var value))
+                _AddParametersWithValue(command,TableOb, value);
+
+            else
+            {
+                Type Reflection = TableOb.GetType();
+                PropertyInfo[] propertyInfo = Reflection.GetProperties();
+                clsSetting.cache.TryAdd(typeof(Class).Name, propertyInfo);
+                _AddParametersWithValue(command, TableOb, propertyInfo);
+            }
+
+
 
 
         }
@@ -310,9 +320,9 @@ namespace Data_Layer
                     foreach (var item in properties)
                     {
                         var ColumnAttribute = item.GetCustomAttribute<DbColumnAttribute>();
-                    
-                            Dictionary<string, object> pairs = Rows[i];
-                        if (ColumnAttribute  != null && pairs.TryGetValue(ColumnAttribute.ColumnName, out var value))
+
+                        Dictionary<string, object> pairs = Rows[i];
+                        if (ColumnAttribute != null && pairs.TryGetValue(ColumnAttribute.ColumnName, out var value))
                             item.SetValue(Class, value != DBNull.Value ? value : null);
                         else
                             item.SetValue(Class, null);
@@ -407,7 +417,7 @@ namespace Data_Layer
         }
 
 
-        public static Class? GetFirstOBFromList<Class>(List<Class> OB)=> OB.FirstOrDefault();
+        public static Class? GetFirstOBFromList<Class>(List<Class> OB) => OB.FirstOrDefault();
 
 
 

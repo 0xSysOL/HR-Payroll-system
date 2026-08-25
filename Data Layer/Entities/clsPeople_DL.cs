@@ -15,7 +15,7 @@ namespace Data_Layer.Entities
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQPeople.Add, connection,CommandType.StoredProcedure);
-                Utilities_DB.AddParametersWithValue(command, Person);
+                Utilities_DB.AddParametersWithValue<MPeople>(command, Person);
 
                 connection.Open();
                 return Utilities_DB.Inserting_Execute(command);
@@ -33,7 +33,7 @@ namespace Data_Layer.Entities
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQPeople.Update,
                     connection, CommandType.StoredProcedure);
 
-                Utilities_DB.AddParametersWithValue(command,Person);
+                Utilities_DB.AddParametersWithValue<MPeople>(command,Person);
                 
 
                 connection.Open();
