@@ -1,5 +1,6 @@
 ﻿using Business___HR.Entities;
 using Models.Entities;
+using Models.Enums;
 using System.Data;
 using System.Diagnostics;
 namespace Hr___Payroll
@@ -199,7 +200,14 @@ namespace Hr___Payroll
             //clsEmployee_BL.SelectRecords(eEm);
 
             //clsEmployee_BL.Delete(6);
-            clsEmployee_BL Employee = new clsEmployee_BL(7);
+            clsEmployee_BL Employee = new clsEmployee_BL();
+
+
+            MEmployee mEmployee = new MEmployee();
+            M_eColumnsName.eEmployee[] eEmployees =
+                { M_eColumnsName.eEmployee.EmployeeID, M_eColumnsName.eEmployee.EmployeeSalary,M_eColumnsName.eEmployee.HireDate };
+
+            mEmployee = clsEmployee_BL.SelectRowsAndChooseColumns(eEmployees).First();
 
         }
 

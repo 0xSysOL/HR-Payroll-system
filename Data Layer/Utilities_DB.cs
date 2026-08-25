@@ -309,8 +309,10 @@ namespace Data_Layer
 
                     foreach (var item in properties)
                     {
-                        Dictionary<string, object> pairs = Rows[i];
-                        if (pairs.TryGetValue(item.Name, out var value))
+                        var ColumnAttribute = item.GetCustomAttribute<DbColumnAttribute>();
+                    
+                            Dictionary<string, object> pairs = Rows[i];
+                        if (ColumnAttribute  != null && pairs.TryGetValue(ColumnAttribute.ColumnName, out var value))
                             item.SetValue(Class, value != DBNull.Value ? value : null);
                         else
                             item.SetValue(Class, null);
@@ -355,7 +357,9 @@ namespace Data_Layer
                     foreach (var item in properties)
                     {
                         Dictionary<string, object> pairs = Rows[i];
-                        if (pairs.TryGetValue(item.Name, out var value))
+                        var ColumnAttribute = item.GetCustomAttribute<DbColumnAttribute>();
+
+                        if (ColumnAttribute != null && pairs.TryGetValue(ColumnAttribute.ColumnName, out var value))
                             item.SetValue(Class, value);
                         else
                             item.SetValue(Class, null);

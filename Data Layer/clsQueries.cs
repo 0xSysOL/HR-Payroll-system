@@ -55,7 +55,7 @@ namespace Data_Layer
             public static string Update = "UpdateEmployee";
             public static string IsEmployeeExists = "IsEmployeeExists";
             public static string GetEmployeeByID = "GetEmployeeByID";
-            public static string SelectRecordsAndChooseColumns = "SelectRecordsAndChooseColumns";
+            public static string SelectRecordsAndChooseColumns = "SelectRecordsAndChooseColumns_Employee";
             public static string SelectRecords = "SelectRecords";
 
             public static string Delete = "DeleteEmployee";
