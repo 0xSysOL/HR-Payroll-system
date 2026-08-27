@@ -75,7 +75,7 @@ namespace Data_Layer.Entities
 
                 connection.Open();
 
-                return GetFirstOBFromList(ConvertRowsToClassesOB<MEmployee>(_SelectRecords_Execute(command)));
+                return GetFirstOBFromList(ConvertRowsToClassesOB<MEmployee>(SelectRecords_Execute(command)));
             }
 
         }
@@ -85,21 +85,23 @@ namespace Data_Layer.Entities
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
                 SqlCommand command = GetSQL_Command(clsQEmployee.SelectRecordsAndChooseColumns, connection, CommandType.StoredProcedure);
-                command.Parameters.AddWithValue("@ColumnNames", AddParametersToString(command, Structure));
+                command.Parameters.AddWithValue("@ColumnNames", AddParametersToString<MPeople>(Structure));
                 connection.Open();
-                return ConvertRowsToClassesOB<MEmployee>(_SelectRecords_Execute(command));
+                return ConvertRowsToClassesOB<MEmployee>(SelectRecords_Execute(command));
 
             }
 
         }
-        public static List<MEmployee> SelectRecords()
+        public static List<MEmployee> SelectRecords(int PageNumber, int RowsPerPage)
         {
 
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
                 SqlCommand command = GetSQL_Command(clsQEmployee.SelectRecords, connection, CommandType.StoredProcedure);
+                AddPaginationToSqlCommand(command, PageNumber, RowsPerPage);
+
                 connection.Open();
-                return ConvertRowsToClassesOB<MEmployee>(_SelectRecords_Execute(command));
+                return ConvertRowsToClassesOB<MEmployee>(SelectRecords_Execute(command));
 
             }
 

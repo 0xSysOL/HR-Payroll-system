@@ -19,13 +19,17 @@ namespace Data_Layer
         }
         #endregion
 
+
+        #region Pagination
         public static void AddPaginationToSqlCommand(SqlCommand command, int PageNumber, int RowPerPage)
         {
             command.Parameters.AddWithValue("@PageNumber", PageNumber);
             command.Parameters.AddWithValue("@RowPerPage", RowPerPage);
 
         }
+        #endregion
 
+        #region initialize Sql Command
         /// <summary>
         /// initialize SqlCommand
         /// </summary>
@@ -39,44 +43,101 @@ namespace Data_Layer
             return command;
         }
 
+        /// <summary>
+        /// we Should Use This Method For Inserting That We Add 3-4 or more 
+        /// parameters Ather wise this Method Nussery to use and
+        /// will take resources for nothing
+        /// </summary>
+        /// <param name="command">SqlCommand</param>
+        /// <param name="TableOb" >
+        /// Table Object If You Want Know What Type Will send From this Method
+        /// See Class namespace Models.Entities</param>
+        private static void _AddParametersWithValue(SqlCommand command, object TableOb, PropertyInfo[] propertyInfo)
+        {
+
+            foreach (var prop in propertyInfo)
+            {
+                var MyAttr = prop.GetCustomAttribute<DbColumnAttribute>();
+                if (MyAttr != null && prop.GetValue(TableOb) != null)
+                    command.Parameters.AddWithValue(MyAttr.ColumnName, prop.GetValue(TableOb));
 
 
+            }
+        }
+        public static void AddParametersWithValue<Class>(SqlCommand command, object TableOb)
+        {
+
+            if (TableOb == null || command == null)
+                return;
+
+            if (clsSetting.cache.TryGetValue(typeof(Class).Name, out var value))
+                _AddParametersWithValue(command, TableOb, value);
+
+            else
+            {
+                Type Reflection = TableOb.GetType();
+                PropertyInfo[] propertyInfo = Reflection.GetProperties();
+                clsSetting.cache.TryAdd(typeof(Class).Name, propertyInfo);
+                _AddParametersWithValue(command, TableOb, propertyInfo);
+            }
+
+
+
+
+        }
+
+
+
+        #endregion
+
+        #region OLD 
         /// <summary>
         /// you can use This Method For
         /// Types Queries Like (SELECT * TableName).
         /// </summary>
         /// <param name="command"></param>
         /// <returns>DataTable</returns>
-        public static DataTable SelectRecords_Execute(SqlCommand command)
-        {
+        //public static DataTable SelectRecords_Execute(SqlCommand command)
+        //{
 
 
-            DataTable data = new DataTable();
-            try
-            {
+        //    DataTable data = new DataTable();
+        //    try
+        //    {
 
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    data.Load(reader);
-                }
+        //        using (SqlDataReader reader = command.ExecuteReader())
+        //        {
+        //            data.Load(reader);
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
 
-            }
+        //    }
 
-            return data;
+        //    return data;
 
-        }
+        //}
+
+
+
+
+
+
+        #endregion
+
+
+        #region Execute Sql Command
 
         /// <summary>
-        /// New Select Record We Will Use This Bec the past its use datatable and we replace it to this method 
+        /// New Select Record We Will Use This Bec the past its use  List<Dictionary<string, object>> and we replace it to this method 
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public static List<Dictionary<string, object>> _SelectRecords_Execute(SqlCommand command)
+
+        public static List<Dictionary<string, object>> SelectRecords_Execute(SqlCommand command)
         {
             List<Dictionary<string, object>> ListDic = new List<Dictionary<string, object>>();
             using (SqlDataReader reader = command.ExecuteReader())
@@ -156,101 +217,6 @@ namespace Data_Layer
         }
 
 
-
-        /// <summary>
-        /// we Should Use This Method For Inserting That We Add 3-4 or more 
-        /// parameters Ather wise this Method Nussery to use and
-        /// will take resources for nothing
-        /// </summary>
-        /// <param name="command">SqlCommand</param>
-        /// <param name="TableOb" >
-        /// Table Object If You Want Know What Type Will send From this Method
-        /// See Class namespace Models.Entities</param>
-        private static void _AddParametersWithValue(SqlCommand command, object TableOb, PropertyInfo[] propertyInfo)
-        {
-
-            foreach (var prop in propertyInfo)
-            {
-                var MyAttr = prop.GetCustomAttribute<DbColumnAttribute>();
-                if (MyAttr != null && prop.GetValue(TableOb) != null)
-                    command.Parameters.AddWithValue(MyAttr.ColumnName, prop.GetValue(TableOb));
-
-
-            }
-        }
-        public static void AddParametersWithValue<Class>(SqlCommand command, object TableOb)
-        {
-
-            if (TableOb == null || command == null)
-                return;
-
-            if (clsSetting.cache.TryGetValue(typeof(Class).Name,out var value))
-                _AddParametersWithValue(command,TableOb, value);
-
-            else
-            {
-                Type Reflection = TableOb.GetType();
-                PropertyInfo[] propertyInfo = Reflection.GetProperties();
-                clsSetting.cache.TryAdd(typeof(Class).Name, propertyInfo);
-                _AddParametersWithValue(command, TableOb, propertyInfo);
-            }
-
-
-
-
-        }
-
-
-
-
-
-        /// <summary>
-        /// 
-        /// this Function Take two Parameter,
-        /// command and TableOb.
-        /// <TableOb> See In Variable Came from outside,
-        /// if Is Null He Will Not Add the Column to string Variable
-        /// If Not He Will Add Like that 
-        /// Example: "PersonID,FirstName", And Method Will Added to string
-        /// why this Important Because To Send As String Text To Database as parameters
-        /// And There will be Process in DB , and selected The Columns That Send it
-        /// Example: when you Send Just "PersonID" the Server
-        /// Just Return one Column > PersonID, not else.
-        /// 
-        /// </summary>
-        /// <param name="command"></param>
-        /// 
-        /// <param name="TableOb"></param>
-        /// <returns></returns>
-        public static string AddParametersToString(SqlCommand command, object TableOb)
-        {
-            if (TableOb == null || command == null)
-                return null;
-
-            string ColumnsName = "";
-
-            Type Reflection = TableOb.GetType();
-            PropertyInfo[] propInfo = Reflection.GetProperties();
-
-            foreach (var Property in propInfo)
-            {
-
-                if (Property.GetValue(TableOb) != null)
-                {
-                    var MyAttr = Property.GetCustomAttribute<DbColumnAttribute>();
-                    if (MyAttr != null)
-                        ColumnsName += MyAttr.ColumnName + ",";
-                }
-            }
-
-            if (ColumnsName.Length > 0)
-                return ColumnsName.Remove(ColumnsName.Length - 1);
-            else
-                return "";
-
-
-        }
-
         public static object Scalar_Execute(SqlCommand command)
         {
 
@@ -293,8 +259,127 @@ namespace Data_Layer
 
         }
 
+        #endregion
 
-        static void AddToCacheDictionary(string ClassName, PropertyInfo[] properties) => clsSetting.cache.GetOrAdd(ClassName, properties);
+
+
+
+        private static string _AddParametersToString<Class>(object TableOb, PropertyInfo[] propInfo)
+        {
+
+            string ColumnsName = "";
+
+            foreach (var Property in propInfo)
+            {
+
+                if (Property.GetValue(TableOb) != null)
+                {
+                    var MyAttr = Property.GetCustomAttribute<DbColumnAttribute>();
+                    if (MyAttr != null)
+                        ColumnsName += MyAttr.ColumnName + ",";
+                }
+            }
+
+            if (ColumnsName.Length > 0)
+                return ColumnsName.Remove(ColumnsName.Length - 1);
+            else
+                return "";
+
+
+        }
+
+        /// <summary>
+        /// 
+        /// this Function Take one Parameter,
+        /// Structure.
+        /// <Structure> See In Variable Came from outside,
+        /// if Is Null He Will Not Add the Column to string Variable
+        /// If Not He Will Add Like that 
+        /// Example: "PersonID,FirstName", And Method Will Added to string
+        /// why this Important Because To Send As String Text To Database as parameters
+        /// And There will be Process in DB , and selected The Columns That Send it
+        /// Example: when you Send Just "PersonID" the Server
+        /// Just Return one Column > PersonID, not else.
+        /// 
+        /// </summary>
+        /// <param name="Structure"></param>
+        /// <returns></returns>
+        public static string AddParametersToString<Class>(object Structure)
+        {
+            if (Structure == null)
+                return null;
+
+
+            if (clsSetting.cache.TryGetValue(typeof(Class).Name, out var value))
+            {
+                return _AddParametersToString<Class>(Structure, value);
+
+            }
+            else
+            {
+                Type Reflection = Structure.GetType();
+                PropertyInfo[] propInfo = Reflection.GetProperties();
+                return _AddParametersToString<Class>(Structure, propInfo);
+            }
+
+
+
+
+        }
+
+
+        #region Use Reflection And Converting Object To Class From well-known Class
+
+        /// <summary>
+        /// this method behoifer work that work with static cache it is store properties
+        /// we stored after first reflection it good to perfromnce,
+        /// and we do not repeat to each call reflect the class everey time
+        /// </summary>
+        /// <typeparam name="T"> Type of class</typeparam>
+        /// <param name="Rows">Data</param>
+        /// <returns></returns>
+        static List<T> _ConvertRowsToClassesOB<T>(List<Dictionary<string, object>> Rows)
+        {
+
+            List<T> Data = new List<T>();
+            PropertyInfo[] properties = clsSetting.cache.TryGetValue(typeof(T).Name, out PropertyInfo[] cachedProps)
+                ? cachedProps : Array.Empty<PropertyInfo>();
+
+            try
+
+            {
+                for (int i = 0; i < Rows.Count; i++)
+                {
+                    T Class = Activator.CreateInstance<T>();
+
+                    foreach (var item in properties)
+                    {
+                        Dictionary<string, object> pairs = Rows[i];
+                        var ColumnAttribute = item.GetCustomAttribute<DbColumnAttribute>();
+
+                        if (ColumnAttribute != null && pairs.TryGetValue(ColumnAttribute.ColumnName, out var value))
+                            item.SetValue(Class, value != DBNull.Value ? value : null);
+                        else
+                            item.SetValue(Class, null);
+
+
+                    }
+
+                    Data.Add(Class);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
+
+            return Data;
+        }
+
 
         /// <summary>
         /// This Method work when you have rows you get it from database and you want to convert it to
@@ -341,68 +426,18 @@ namespace Data_Layer
 
             return Data;
         }
-
-        /// <summary>
-        /// this method behoifer work that work with static cache it is store properties
-        /// we stored after first reflection it good to perfromnce,
-        /// and we do not repeat to each call reflect the class everey time
-        /// </summary>
-        /// <typeparam name="T"> Type of class</typeparam>
-        /// <param name="Rows">Data</param>
-        /// <returns></returns>
-        static List<T> _ConvertRowsToClassesOB<T>(List<Dictionary<string, object>> Rows)
-        {
-
-            List<T> Data = new List<T>();
-            PropertyInfo[] properties = clsSetting.cache.TryGetValue(typeof(T).Name, out PropertyInfo[] cachedProps)
-                ? cachedProps : Array.Empty<PropertyInfo>();
-
-            try
-
-            {
-                for (int i = 0; i < Rows.Count; i++)
-                {
-                    T Class = Activator.CreateInstance<T>();
-
-                    foreach (var item in properties)
-                    {
-                        Dictionary<string, object> pairs = Rows[i];
-                        var ColumnAttribute = item.GetCustomAttribute<DbColumnAttribute>();
-
-                        if (ColumnAttribute != null && pairs.TryGetValue(ColumnAttribute.ColumnName, out var value))
-                            item.SetValue(Class, value);
-                        else
-                            item.SetValue(Class, null);
-
-
-                    }
-
-                    Data.Add(Class);
-
-                }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-
-
-            return Data;
-        }
         public static List<T> ConvertRowsToClassesOB<T>(List<Dictionary<string, object>> Rows)
         {
             if (Rows == null || Rows.Count == 0)
                 return null;
 
 
-            if (clsSetting.cache.TryGetValue(typeof(T).Name, out var values))
-            {
-                return _ConvertRowsToClassesOB<T>(Rows);
+            //if (clsSetting.cache.TryGetValue(typeof(T).Name, out var values))
+            //{
+            //    return _ConvertRowsToClassesOB<T>(Rows,values);
 
-            }
-            else
+            //}
+            //else
             {
 
 
@@ -416,11 +451,16 @@ namespace Data_Layer
 
         }
 
+        public static Class? ConvertRowToClassesOB<Class>(List<Dictionary<string, object>> OB)
+        {
+            return GetFirstOBFromList(ConvertRowsToClassesOB<Class>(OB));
+        }
 
         public static Class? GetFirstOBFromList<Class>(List<Class> OB) => OB.FirstOrDefault();
 
+        #endregion End
 
-
+        static void AddToCacheDictionary(string ClassName, PropertyInfo[] properties) => clsSetting.cache.GetOrAdd(ClassName, properties);
 
 
     }

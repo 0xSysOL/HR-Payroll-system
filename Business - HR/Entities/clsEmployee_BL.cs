@@ -119,11 +119,11 @@ namespace Business___HR.Entities
 
 
         }
-        public static List<MEmployee> SelectRecords()
+        public static List<MEmployee>   SelectRecords(int PageNumber,int RowsPerPage)
         {
 
 
-            return clsEmployee_DL.SelectRecords();
+            return clsEmployee_DL.SelectRecords(PageNumber, RowsPerPage);
 
         }
         public static bool Delete(int EmployeeID) 

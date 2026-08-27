@@ -57,7 +57,7 @@ namespace Data_Layer.Entities
 
                 connection.Open();
 
-                return Utilities_DB.ConvertRowsToClassesOB<MApplication>(Utilities_DB._SelectRecords_Execute(command));
+                return Utilities_DB.ConvertRowsToClassesOB<MApplication>(Utilities_DB.SelectRecords_Execute(command));
             }
 
 

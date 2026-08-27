@@ -24,7 +24,7 @@ namespace Data_Layer.Entities
 
                 AddPaginationToSqlCommand(command, PageNumber, RowPerPage);
                 connection.Open();
-                return ConvertRowsToClassesOB<MCountry>(_SelectRecords_Execute(command));
+                return ConvertRowsToClassesOB<MCountry>(SelectRecords_Execute(command));
             
 
             }

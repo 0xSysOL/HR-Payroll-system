@@ -11,7 +11,7 @@ namespace Business___HR.Utilities
 { 
     internal  class Utilities
     {
-
+        #region OLD
         public static MPeople ConvertDataTableToMPeople(DataTable data)
         {
             MPeople Person = new MPeople();
@@ -88,6 +88,9 @@ namespace Business___HR.Utilities
 
             return user;
         }
+        #endregion 
+
+
 
         public static  eMode ChangeModeToUpdate(eMode mode)
         {
@@ -121,6 +124,8 @@ namespace Business___HR.Utilities
 
             return HashValue;
         }
+
+
 
 
     }

@@ -43,58 +43,46 @@ namespace Data_Layer.Entities
             }
 
         }
-        public static DataTable GetAll()
+
+        public static List<MUser> SelectRecordsAndChooseColumns(MUser Structure)
         {
+
 
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
-                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.GetAll, connection, CommandType.StoredProcedure);
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.SelectRecordsAndChooseColumns, connection, CommandType.StoredProcedure);
 
 
-
+                command.Parameters.AddWithValue("ColumnNames", Utilities_DB.AddParametersToString<MUser>(Structure));
                 connection.Open();
-                return Utilities_DB.SelectRecords_Execute(command);
-
+                return Utilities_DB.ConvertRowsToClassesOB<MUser>(Utilities_DB.SelectRecords_Execute(command));
 
             }
 
 
         }
-        public static DataTable SelectRecords(MUser Structure)
+        public static List<MUser> SelectRecords(int PageNumber, int RowPerPage)
         {
-
-
-            using (SqlConnection connection = clsSetting.GetSqlConnection())
+            using(SqlConnection connection = clsSetting.GetSqlConnection())
             {
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.SelectRecords, connection, CommandType.StoredProcedure);
-
-
-                command.Parameters.AddWithValue
-                    ("ColumnNames", Utilities_DB.AddParametersToString(command, Structure));
+                Utilities_DB.AddPaginationToSqlCommand(command, PageNumber, RowPerPage);
                 connection.Open();
-
-
-                return Utilities_DB.SelectRecords_Execute(command);
-
+                return Utilities_DB.ConvertRowsToClassesOB<MUser>(Utilities_DB.SelectRecords_Execute(command));
 
             }
-
-
         }
 
-       
-        public static DataTable GetUser(int UserID)
+
+        public static MUser? GetUserByID(int UserID)
         {
 
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
-                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.GetUser, connection, CommandType.StoredProcedure);
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.GetUserByID, connection, CommandType.StoredProcedure);
                 command.Parameters.AddWithValue("UserID", UserID);
-
                 connection.Open();
-
-                return Utilities_DB.SelectRecords_Execute(command);
-
+                return Utilities_DB.ConvertRowToClassesOB<MUser>(Utilities_DB.SelectRecords_Execute(command));
             }
 
 
@@ -115,14 +103,14 @@ namespace Data_Layer.Entities
             }
 
 
-            
+
         }
         public static bool DeleteUser(int UserID)
         {
 
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {
-                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.DeleteUser,connection,CommandType.StoredProcedure);
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQUser.DeleteUser, connection, CommandType.StoredProcedure);
                 command.Parameters.AddWithValue("UserID", UserID);
                 connection.Open();
                 short Result = Convert.ToInt16(Utilities_DB.ExecuteNoneQu(command));

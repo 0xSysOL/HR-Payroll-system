@@ -1,6 +1,7 @@
 ﻿using Business___HR.Entities;
+using Data_Layer.Entities;
 using Models.Entities;
-using Models.Enums;
+using System.Collections.Concurrent;
 using System.Data;
 using System.Diagnostics;
 namespace Hr___Payroll
@@ -35,26 +36,26 @@ namespace Hr___Payroll
 
         public static void TestPeople()
         {
-            MPeople StrPerson = new MPeople();
+            //MPeople StrPerson = new MPeople();
 
-            StrPerson.NationalNo = "19989876543210";
-            StrPerson.FirstName = "Fatima";
-            StrPerson.SecondName = "Hassan";
-            StrPerson.ThirdName = "Ibrahim";
-            StrPerson.LastName = "Al-Jubouri";
-            StrPerson.DateOfBirth = new DateTime(1998, 10, 20);
-            StrPerson.Gender = 0;
-            StrPerson.Address = "Erbil - Ankawa - 100 Meter Street";
-            StrPerson.Phone = "+9647509876543";
-            StrPerson.Email = "fatima.hassan@example.com";
-            StrPerson.ImagePath = "9876543210123";
-            StrPerson.CountryID = 1;
+            //StrPerson.NationalNo = "19989876543210";
+            //StrPerson.FirstName = "Fatima";
+            //StrPerson.SecondName = "Hassan";
+            //StrPerson.ThirdName = "Ibrahim";
+            //StrPerson.LastName = "Al-Jubouri";
+            //StrPerson.DateOfBirth = new DateTime(1998, 10, 20);
+            //StrPerson.Gender = 0;
+            //StrPerson.Address = "Erbil - Ankawa - 100 Meter Street";
+            //StrPerson.Phone = "+9647509876543";
+            //StrPerson.Email = "fatima.hassan@example.com";
+            //StrPerson.ImagePath = "9876543210123";
+            //StrPerson.CountryID = 1;
 
-            clsPeople_BL clsPeople_BL = new clsPeople_BL(StrPerson);
+            //clsPeople_BL clsPeople_BL = new clsPeople_BL(StrPerson);
 
 
 
-            clsPeople_BL.Save();
+            //clsPeople_BL.Save();
 
 
 
@@ -77,7 +78,7 @@ namespace Hr___Payroll
             //    M_eColumnsName.ePerson.FirstName
             //};
 
-            //DataTable data =  clsPeople_BL.SelectRecords(ePerson);
+            //List<MPeople> data = clsPeople_BL.SelectRowsAndChooseColumns(ePerson);
 
             //Console.OutputEncoding = Encoding.UTF8;
             //foreach (DataRow row in data.Rows)
@@ -102,6 +103,14 @@ namespace Hr___Payroll
             ////bool res =  Person.Save();
 
             //bool res=  Person.Delete(2);
+
+
+            //clsPeople_BL clsPeople_DL = new clsPeople_BL(1);
+
+            List<MPeople> f = clsPeople_BL.SelectRecords(1, 4);
+
+
+
         }
 
         public static void TestUser()
@@ -131,10 +140,10 @@ namespace Hr___Payroll
 
 
             //Models.Enums.M_eColumnsName.eUser[] eeUser =
-            //    { Models.Enums.M_eColumnsName.eUser.IsActive};
+            //    { Models.Enums.M_eColumnsName.eUser.Username};
 
 
-            //DataTable data  = clsUser_BL.SelectRecords(eeUser);
+            //List<MUser> data = clsUser_BL.SelectRecords(eeUser);
 
             //clsUser_BL clsUser_BL = new clsUser_BL(new MUser());
 
@@ -154,6 +163,10 @@ namespace Hr___Payroll
 
 
             //user_BL.SetPassword("1234");
+
+
+            List<MUser> d = clsUser_BL.SelectRecords(1, 4);
+
 
         }
 
@@ -203,11 +216,35 @@ namespace Hr___Payroll
             clsEmployee_BL Employee = new clsEmployee_BL();
 
 
-            MEmployee mEmployee = new MEmployee();
-            M_eColumnsName.eEmployee[] eEmployees =
-                { M_eColumnsName.eEmployee.EmployeeID, M_eColumnsName.eEmployee.EmployeeSalary,M_eColumnsName.eEmployee.HireDate };
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    StartTime();
+            //    MEmployee mEmployee = clsEmployee_BL.SelectRecords(1, 2).First();
+            //    Console.WriteLine("Time MS: " + GetTimeMS());
 
-            mEmployee = clsEmployee_BL.SelectRowsAndChooseColumns(eEmployees).First();
+            //}
+            StartTime();
+            long Befor = GC.GetTotalMemory(true);
+            Console.WriteLine("Memory: " + Befor);
+            long After = 0;
+            Parallel.For(0, 20000, n =>
+            {
+
+                clsEmployee_BL.SelectRecords(1, 5);
+                clsApplication_BL.SelectRecords(1, 5);
+                //M_eColumnsName.ePerson[] f = { M_eColumnsName.ePerson.Address };
+                //clsPeople_BL.SelectRecords(f);
+                clsPeople_DL.IsNationalNoExists("23");
+            });
+            Console.WriteLine("Time MS: " + GetTimeMS());
+            After = GC.GetTotalMemory(true);
+
+            Console.WriteLine("Memory: " + (After - Befor));
+
+            //M_eColumnsName.eEmployee[] eEmployees =
+            //    { M_eColumnsName.eEmployee.EmployeeID, M_eColumnsName.eEmployee.EmployeeSalary,M_eColumnsName.eEmployee.HireDate };
+
+            //mEmployee = clsEmployee_BL.SelectRowsAndChooseColumns(eEmployees).First();
 
         }
 
@@ -228,7 +265,7 @@ namespace Hr___Payroll
 
             MApplication d = clsApplication_BL.GetApplicationByID(3);
             t1.Stop();
-            Console.WriteLine("MS:"+t1.ElapsedMilliseconds);
+            Console.WriteLine("MS:" + t1.ElapsedMilliseconds);
             Stopwatch t2 = Stopwatch.StartNew();
 
             MApplication d2 = clsApplication_BL.GetApplicationByID(3);
@@ -237,14 +274,50 @@ namespace Hr___Payroll
 
 
         }
-        static void Main(string[] args)
+
+        public static void TestTermination()
         {
 
 
+        }
 
-            TestEmployee();
+        static Stopwatch t1 = Stopwatch.StartNew();
+        public static void StartTime()
+        {
+            t1 = Stopwatch.StartNew();
+
+            t1.Start();
+
+        }
+        public static long GetTimeMS()
+        {
+            t1.Stop();
+            long MS = t1.ElapsedTicks;
+            t1.Reset();
+            return MS;
+        }
+        static void Main(string[] args)
+        {
+            ConcurrentDictionary<int, double> keyValuePairs = new ConcurrentDictionary<int, double>();
+            Parallel.For(0, 1, n =>
+            {
+                StartTime();
+                // here
+
+                // here 
+                double timeMs = (double)t1.ElapsedTicks / Stopwatch.Frequency * 1000.0;
+                keyValuePairs.TryAdd(n, timeMs);
+            }
+            );
+            keyValuePairs.OrderBy(n => n);
+            var pairs = keyValuePairs.Select(n => new { n.Value, n.Key });
+
+
+            Console.WriteLine(keyValuePairs.Average(n => n.Value));
 
 
         }
+
+
     }
 }

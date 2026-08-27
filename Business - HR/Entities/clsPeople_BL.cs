@@ -1,8 +1,6 @@
 ﻿using Data_Layer.Entities;
 using Models.Entities;
 using Models.Enums;
-using System.Data;
-using static Business___HR.Utilities.Utilities;
 using static Models.Enums.M_Enums;
 namespace Business___HR.Entities
 {
@@ -10,7 +8,6 @@ namespace Business___HR.Entities
     {
 
         public MPeople StrPerson;
-
 
 
         eMode mode;
@@ -26,7 +23,6 @@ namespace Business___HR.Entities
             StrPerson = GetPersonByID(PersonID);
             if (StrPerson != null)
                 mode = eMode.Update;
-
         }
 
         public bool Save()
@@ -55,13 +51,8 @@ namespace Business___HR.Entities
         }
 
 
-        public static DataTable GetAll()
-        {
-            return clsPeople_DL.GetAll();
-        }
 
-
-        public static DataTable SelectRecords(M_eColumnsName.ePerson[] People)
+        public static List<MPeople> SelectRowsAndChooseColumns(M_eColumnsName.ePerson[] People)
         {
 
             MPeople Structure = new MPeople();
@@ -121,11 +112,13 @@ namespace Business___HR.Entities
                 }
             }
 
-
-            return clsPeople_DL.SelectRecords(Structure);
+            return clsPeople_DL.SelectRowsAndChooseColumns(Structure);
         }
 
-
+        public static List<MPeople> SelectRecords(int PageNumber,int RowPerPage)
+        {
+            return clsPeople_DL.SelectRecords(PageNumber, RowPerPage);
+        }
 
         public static bool IsNationalNoExists(string NationalNo)
         {
@@ -135,25 +128,15 @@ namespace Business___HR.Entities
         }
 
 
-        public static MPeople GetPersonByID(int PersonID)
+        public static MPeople? GetPersonByID(int PersonID)
         {
+            if(clsPeople_DL.IsPersonIDExists(PersonID))
+            return clsPeople_DL.GetPersonByID(PersonID);
 
-
-
-
-
-            DataTable data = clsPeople_DL.GetPersonByID(PersonID);
-
-            if (data != null)
-                return ConvertDataTableToMPeople(data);
-            else
-                return null;
-
-
-
+            return null;
         }
 
-     
+
 
         public bool Delete(int PersonID)
         {
@@ -164,7 +147,7 @@ namespace Business___HR.Entities
         }
 
 
-       
+
 
     }
 

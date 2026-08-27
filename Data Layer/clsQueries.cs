@@ -29,10 +29,12 @@ namespace Data_Layer
             public static string Add = "AddPerson";
             public static string Update = "UpdatePerson";
             public static string Delete = "DeletePerson";
-            public static string GetAll = "GetAllPeople";
             public static string SelectRecords = "SelectRecords_People";
+            public static string SelectRecordsAndChooseColumns = "SelectRecordsAndChooseColumns_People";
             public static string IsNationalNoExists = "IsNationalNoExists";
+            public static string IsPersonIDExists = "IsPersonIDExists";
             public static string GetPersonIDByID = "GetPersonIDByID"; 
+
         }
 
         public class clsQUser
@@ -40,9 +42,9 @@ namespace Data_Layer
             public static string Add = "AddUser";
             public static string Update = "UpdateUser";
             public static string DeleteUser = "deleteUser";
-            public static string GetAll = "GetAllUser";
+            public static string SelectRecordsAndChooseColumns = "SelectRecordsAndChooseColumns_Users";
             public static string SelectRecords = "SelectRecords_User";
-            public static string GetUser = "GetUser";
+            public static string GetUserByID = "GetUserByID";
             public static string IsUserIDExists = "IsUserIDExists";
             public static string IsUsernameExists = "IsUsernameExists";
 
@@ -56,7 +58,7 @@ namespace Data_Layer
             public static string IsEmployeeExists = "IsEmployeeExists";
             public static string GetEmployeeByID = "GetEmployeeByID";
             public static string SelectRecordsAndChooseColumns = "SelectRecordsAndChooseColumns_Employee";
-            public static string SelectRecords = "SelectRecords";
+            public static string SelectRecords = "SelectRecords_Employee";
 
             public static string Delete = "DeleteEmployee";
 
