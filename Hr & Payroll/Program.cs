@@ -277,8 +277,18 @@ namespace Hr___Payroll
 
         public static void TestTermination()
         {
+            MTermination termination = new MTermination();
 
+            termination.TerminationDate = new DateTime();
+            termination.TerminationDate = DateTime.Now;
+            termination.Description = "ff";
+            termination.CreateByUserID = 10;
+            termination.EmployeeID = 7;
+            termination.TerminationReason = 4;
 
+            clsTermination_BL termination_BL = new clsTermination_BL(termination);
+
+            termination_BL.Add();
         }
 
         static Stopwatch t1 = Stopwatch.StartNew();
@@ -297,23 +307,28 @@ namespace Hr___Payroll
             return MS;
         }
         static void Main(string[] args)
-        {
-            ConcurrentDictionary<int, double> keyValuePairs = new ConcurrentDictionary<int, double>();
-            Parallel.For(0, 1, n =>
-            {
-                StartTime();
-                // here
+        { 
+            
+            TestTermination();
+            
+            
+            
+            //ConcurrentDictionary<int, double> keyValuePairs = new ConcurrentDictionary<int, double>();
+            //Parallel.For(0, 1, n =>
+            //{
+            //    StartTime();
+            //    // here
+             
+            //    // here 
+            //    double timeMs = (double)t1.ElapsedTicks / Stopwatch.Frequency * 1000.0;
+            //    keyValuePairs.TryAdd(n, timeMs);
+            //}
+            //);
+            //keyValuePairs.OrderBy(n => n);
+            //var pairs = keyValuePairs.Select(n => new { n.Value, n.Key });
 
-                // here 
-                double timeMs = (double)t1.ElapsedTicks / Stopwatch.Frequency * 1000.0;
-                keyValuePairs.TryAdd(n, timeMs);
-            }
-            );
-            keyValuePairs.OrderBy(n => n);
-            var pairs = keyValuePairs.Select(n => new { n.Value, n.Key });
 
-
-            Console.WriteLine(keyValuePairs.Average(n => n.Value));
+            //Console.WriteLine(keyValuePairs.Average(n => n.Value));
 
 
         }

@@ -238,7 +238,7 @@ namespace Models.Entities
         [DbColumnAttribute("TerminationDate")]
         public DateTime? TerminationDate { get; set; }
 
-        [DbColumnAttribute("Description")]
+        [DbColumnAttribute("Description")] 
         public string? Description { get; set; }
 
         [DbColumnAttribute("EmployeeID")]
@@ -305,4 +305,7 @@ namespace Models.Entities
         [DbColumnAttribute("VacationTypeID")]
         public int? VacationTypeID { get; set; }
     }
+
+
+
 }

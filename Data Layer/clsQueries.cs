@@ -75,5 +75,12 @@ namespace Data_Layer
 
         }
 
+        public class clsQTermination
+        {
+            public static string Add = "AddTermination";
+
+
+        }
+
     }
 }
