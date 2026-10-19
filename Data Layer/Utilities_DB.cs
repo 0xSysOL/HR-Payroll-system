@@ -242,8 +242,6 @@ namespace Data_Layer
             try
             {
 
-
-
                 return command.ExecuteNonQuery();
 
             }
@@ -431,12 +429,12 @@ namespace Data_Layer
                 return null;
 
 
-            //if (clsSetting.cache.TryGetValue(typeof(T).Name, out var values))
-            //{
-            //    return _ConvertRowsToClassesOB<T>(Rows,values);
+            if (clsSetting.cache.TryGetValue(typeof(T).Name, out var values))
+            {
+                return _ConvertRowsToClassesOB<T>(Rows, values);
 
-            //}
-            //else
+            }
+            else
             {
 
 

@@ -1,8 +1,6 @@
 ﻿using Business___HR.Entities;
-using Data_Layer.Entities;
+using Business_Payroll.Entities;
 using Models.Entities;
-using System.Collections.Concurrent;
-using System.Data;
 using System.Diagnostics;
 namespace Hr___Payroll
 {
@@ -17,26 +15,42 @@ namespace Hr___Payroll
             List<MCountry> data = clsCountry_BL.GetData(1, 23);
 
 
-            var id = data.Select(n => n.CountryID);
 
-            Console.WriteLine(string.Join(",", id));
+            foreach (var item in data)
+            {
+                Console.WriteLine(item.CountryID);
+                Console.WriteLine(item.CountryName);
+
+            }
+
         }
         public static void TestDepartment()
         {
 
             MDepartment department = new MDepartment();
-            department.DepartmentName = "Done";
+            department.DepartmentName = "Testing 2";
 
 
             clsDepartment_BL clsDepartment_ = new clsDepartment_BL(department);
-
             Console.WriteLine(clsDepartment_.Add());
+
 
         }
 
+        public static void TestJobTitle()
+        {
+            clsJobTitle_BL clsJobTitle_BL = new Business___HR.Entities.clsJobTitle_BL("Testing 1");
+
+
+            clsJobTitle_BL.Save();
+
+
+
+
+        }
         public static void TestPeople()
         {
-            //MPeople StrPerson = new MPeople();
+            MPeople StrPerson = new MPeople();
 
             //StrPerson.NationalNo = "19989876543210";
             //StrPerson.FirstName = "Fatima";
@@ -46,7 +60,7 @@ namespace Hr___Payroll
             //StrPerson.DateOfBirth = new DateTime(1998, 10, 20);
             //StrPerson.Gender = 0;
             //StrPerson.Address = "Erbil - Ankawa - 100 Meter Street";
-            //StrPerson.Phone = "+9647509876543";
+            //StrPerson.PhoneNumber = "+9647509876543";
             //StrPerson.Email = "fatima.hassan@example.com";
             //StrPerson.ImagePath = "9876543210123";
             //StrPerson.CountryID = 1;
@@ -69,7 +83,6 @@ namespace Hr___Payroll
 
             //}
 
-
             //M_eColumnsName.ePerson[] ePerson =
             //{
             //    M_eColumnsName.ePerson.ImagePath,
@@ -81,10 +94,10 @@ namespace Hr___Payroll
             //List<MPeople> data = clsPeople_BL.SelectRowsAndChooseColumns(ePerson);
 
             //Console.OutputEncoding = Encoding.UTF8;
-            //foreach (DataRow row in data.Rows)
+            //foreach (MPeople row in data)
             //{
-            //    Console.WriteLine(row["NationalNo"]);
-
+            //    Console.WriteLine(row.PersonID);
+            //    Console.WriteLine(row.FirstName);
 
             //}
 
@@ -107,7 +120,7 @@ namespace Hr___Payroll
 
             //clsPeople_BL clsPeople_DL = new clsPeople_BL(1);
 
-            List<MPeople> f = clsPeople_BL.SelectRecords(1, 4);
+            //List<MPeople> f = clsPeople_BL.SelectRecords(1, 4);
 
 
 
@@ -118,13 +131,13 @@ namespace Hr___Payroll
 
 
 
-            //clsUser_BL clsUser = new clsUser_BL();
-            //clsUser.SetUsername("User1");
-            //clsUser.SetIsActive(true);
-            //clsUser.SetPassword("1234");
-            //clsUser.SetPersonID(1);
+            clsUser_BL clsUser = new clsUser_BL();
+            clsUser.Username = "User_6";
+            clsUser.SetIsActive(true);
+            clsUser.SetPassword("1235");
+            clsUser.EmployeeID = 3;
 
-            //bool Re = clsUser.Save();
+            bool Re = clsUser.Save();
 
 
             //DataTable data = clsUser_BL.GetData();
@@ -165,27 +178,30 @@ namespace Hr___Payroll
             //user_BL.SetPassword("1234");
 
 
-            List<MUser> d = clsUser_BL.SelectRecords(1, 4);
+            //List<MUser> d = clsUser_BL.SelectRecords(1, 4);
 
 
         }
 
         public static void TestEmployee()
         {
-            //clsEmployee_BL Employee = new clsEmployee_BL();
 
-            //Employee.StrEmployee.PersonID = 1;
-            //Employee.StrEmployee.ManagerID = null;
-            //Employee.StrEmployee.DepartmentID = 1;
-            //Employee.StrEmployee.CreateByUserID = 10;
-            //Employee.StrEmployee.Salary = 75000.00m;
-            //Employee.StrEmployee.Status = 1;
-            //Employee.StrEmployee.HireDate = new DateTime(2023, 6, 15);
+            MEmployee employee = new MEmployee();
+            employee.PersonID = 2;
+            employee.ManagerID = 1;
+            employee.DepartmentID = 1;
+            employee.CreateByUserID = 1;
+            employee.EmployeeSalary = 55000.00m;
+            employee.EmployeeStatus = 1;
+            employee.JobTitleID = 1;
 
-            //if (Employee.Save())
-            //    Console.WriteLine("Yes");
-            //else
-            //    Console.WriteLine("No");
+            employee.HireDate = new DateTime(2023, 6, 15);
+
+            clsEmployee_BL Employee = new clsEmployee_BL(employee);
+            if (Employee.Save())
+                Console.WriteLine("Yes");
+            else
+                Console.WriteLine("No");
 
 
             //if(clsEmployee_BL.IsEmployeeExists(-1))
@@ -212,39 +228,39 @@ namespace Hr___Payroll
 
             //clsEmployee_BL.SelectRecords(eEm);
 
-            //clsEmployee_BL.Delete(6);
-            clsEmployee_BL Employee = new clsEmployee_BL();
+            ////clsEmployee_BL.Delete(6);
+            //clsEmployee_BL Employee = new clsEmployee_BL();
 
 
-            //for (int i = 0; i < 3; i++)
+            ////for (int i = 0; i < 3; i++)
+            ////{
+            ////    StartTime();
+            ////    MEmployee mEmployee = clsEmployee_BL.SelectRecords(1, 2).First();
+            ////    Console.WriteLine("Time MS: " + GetTimeMS());
+
+            ////}
+            //StartTime();
+            //long Befor = GC.GetTotalMemory(true);
+            //Console.WriteLine("Memory: " + Befor);
+            //long After = 0;
+            //Parallel.For(0, 20000, n =>
             //{
-            //    StartTime();
-            //    MEmployee mEmployee = clsEmployee_BL.SelectRecords(1, 2).First();
-            //    Console.WriteLine("Time MS: " + GetTimeMS());
 
-            //}
-            StartTime();
-            long Befor = GC.GetTotalMemory(true);
-            Console.WriteLine("Memory: " + Befor);
-            long After = 0;
-            Parallel.For(0, 20000, n =>
-            {
+            //    clsEmployee_BL.SelectRecords(1, 5);
+            //    clsApplication_BL.SelectRecords(1, 5);
+            //    //M_eColumnsName.ePerson[] f = { M_eColumnsName.ePerson.Address };
+            //    //clsPeople_BL.SelectRecords(f);
+            //    clsPeople_DL.IsNationalNoExists("23");
+            //});
+            //Console.WriteLine("Time MS: " + GetTimeMS());
+            //After = GC.GetTotalMemory(true);
 
-                clsEmployee_BL.SelectRecords(1, 5);
-                clsApplication_BL.SelectRecords(1, 5);
-                //M_eColumnsName.ePerson[] f = { M_eColumnsName.ePerson.Address };
-                //clsPeople_BL.SelectRecords(f);
-                clsPeople_DL.IsNationalNoExists("23");
-            });
-            Console.WriteLine("Time MS: " + GetTimeMS());
-            After = GC.GetTotalMemory(true);
+            //Console.WriteLine("Memory: " + (After - Befor));
 
-            Console.WriteLine("Memory: " + (After - Befor));
+            ////M_eColumnsName.eEmployee[] eEmployees =
+            ////    { M_eColumnsName.eEmployee.EmployeeID, M_eColumnsName.eEmployee.EmployeeSalary,M_eColumnsName.eEmployee.HireDate };
 
-            //M_eColumnsName.eEmployee[] eEmployees =
-            //    { M_eColumnsName.eEmployee.EmployeeID, M_eColumnsName.eEmployee.EmployeeSalary,M_eColumnsName.eEmployee.HireDate };
-
-            //mEmployee = clsEmployee_BL.SelectRowsAndChooseColumns(eEmployees).First();
+            ////mEmployee = clsEmployee_BL.SelectRowsAndChooseColumns(eEmployees).First();
 
         }
 
@@ -279,16 +295,26 @@ namespace Hr___Payroll
         {
             MTermination termination = new MTermination();
 
-            termination.TerminationDate = new DateTime();
             termination.TerminationDate = DateTime.Now;
             termination.Description = "ff";
-            termination.CreateByUserID = 10;
-            termination.EmployeeID = 7;
-            termination.TerminationReason = 4;
+            termination.CreateByUserID = 1;
+            termination.EmployeeID = 1;
+            termination.TerminationReason = 1;
 
             clsTermination_BL termination_BL = new clsTermination_BL(termination);
 
             termination_BL.Add();
+
+            Console.WriteLine("ID: " + termination.TerminationID);
+
+        }
+        public static void TestPayrollReports()
+        {
+
+            clsPayrollReport_BL payrollReport_BL = new clsPayrollReport_BL();
+
+            payrollReport_BL.Add(DateTime.Now, 1);
+
         }
 
         static Stopwatch t1 = Stopwatch.StartNew();
@@ -307,18 +333,36 @@ namespace Hr___Payroll
             return MS;
         }
         static void Main(string[] args)
-        { 
-            
-            TestTermination();
-            
-            
-            
+        {
+            //TestCountryClass();
+            //TestDepartment();
+            //TestPeople();
+            //TestJobTitle();
+            //TestUser();
+            //TestEmployee();
+            //TestApplication();
+            //TestTermination();
+            //TestPayrollReports();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //ConcurrentDictionary<int, double> keyValuePairs = new ConcurrentDictionary<int, double>();
             //Parallel.For(0, 1, n =>
             //{
             //    StartTime();
             //    // here
-             
+
             //    // here 
             //    double timeMs = (double)t1.ElapsedTicks / Stopwatch.Frequency * 1000.0;
             //    keyValuePairs.TryAdd(n, timeMs);

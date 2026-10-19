@@ -10,7 +10,7 @@ namespace Data_Layer.Entities
 
 
 
-        public static int? Add(MPeople Person)
+        public static int? Add(MPeople Person) 
         {
             using (SqlConnection connection = clsSetting.GetSqlConnection())
             {

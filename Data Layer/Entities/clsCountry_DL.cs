@@ -9,7 +9,7 @@ using Microsoft.Data.SqlClient;
 using Models.Entities;
 using static Data_Layer.Configuration.clsSetting;
 using static Data_Layer.Utilities_DB;
-
+using static Data_Layer.clsQueries;
 namespace Data_Layer.Entities
 {
     public class clsCountry_DL
@@ -20,7 +20,7 @@ namespace Data_Layer.Entities
 
             using (SqlConnection connection = new SqlConnection(GetConnectionString()))
             {
-                SqlCommand command = GetSQL_Command(clsQueries.clsQCountry.GetAll, connection,CommandType.StoredProcedure);
+                SqlCommand command = GetSQL_Command(clsQCountry.GetAll, connection,CommandType.StoredProcedure);
 
                 AddPaginationToSqlCommand(command, PageNumber, RowPerPage);
                 connection.Open();

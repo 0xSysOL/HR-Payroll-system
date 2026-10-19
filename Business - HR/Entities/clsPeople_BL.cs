@@ -89,7 +89,7 @@ namespace Business___HR.Entities
                         break;
 
                     case M_eColumnsName.ePerson.PhoneNumber:
-                        Structure.Phone = "";
+                        Structure.PhoneNumber = "";
                         break;
 
                     case M_eColumnsName.ePerson.Email:
@@ -127,7 +127,9 @@ namespace Business___HR.Entities
 
         }
 
+        public static bool IsPersonExists(int PersonID) => clsPeople_DL.IsPersonIDExists(PersonID);
 
+        
         public static MPeople? GetPersonByID(int PersonID)
         {
             if(clsPeople_DL.IsPersonIDExists(PersonID))

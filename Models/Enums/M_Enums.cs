@@ -35,7 +35,7 @@
             Username,
             Password,
             IsActive,
-            PersonID
+            EmployeeID
 
         }
 

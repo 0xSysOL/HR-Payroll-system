@@ -9,13 +9,13 @@ namespace Business___HR.Entities
     public class clsEmployee_BL
     {
 
-        public MEmployee StrEmployee;
+        MEmployee StrEmployee;
         eMode _eMode;
             
 
-        public clsEmployee_BL()
+        public clsEmployee_BL(MEmployee StrEmployee)
         {
-            StrEmployee = new MEmployee();
+            this.StrEmployee = StrEmployee;
             _eMode = eMode.Add;
         } 
         public clsEmployee_BL(int EmployeeID)
@@ -26,28 +26,29 @@ namespace Business___HR.Entities
 
         public MEmployee GetEmployeeByID(int EmployeeID)
         {
-
-
             return clsEmployee_DL.GetEmployeeByID(EmployeeID);
-
         }
 
         public bool Save()
         {
-            // Feat: We Should Added Validation Important things one of them its Manager ID should not Give Him Null
-            //if(IsAllRequirementsPass(employee))
-            //{
+            if (CheckFromInputs_IsNull(StrEmployee,true))
+                return false;
 
-            //}
-            
+            if (!IsValidInput(StrEmployee))
+                return false;
+
+
+            if (!clsPeople_BL.IsPersonExists((int)StrEmployee.PersonID))
+                return false;
+
+
+
             switch (_eMode)
             {
 
                 case eMode.Add:
                     StrEmployee.EmployeeID = clsEmployee_DL.Add(StrEmployee);
                     return StrEmployee.EmployeeID != null ? true : false;
-                        
-
                 case eMode.Update:
                     return clsEmployee_DL.Update(StrEmployee);
 
@@ -96,11 +97,11 @@ namespace Business___HR.Entities
                         break;
 
                     case M_eColumnsName.eEmployee.EmployeeSalary:
-                        Structure.Salary = 0;
+                        Structure.EmployeeSalary = 0;
                         break;
 
                     case M_eColumnsName.eEmployee.EmployeeStatus:
-                        Structure.Status = 0;
+                        Structure.EmployeeStatus = 0;
                         break;
 
                     case M_eColumnsName.eEmployee.HireDate:
@@ -130,6 +131,8 @@ namespace Business___HR.Entities
         {
             return clsEmployee_DL.Delete(EmployeeID);
         }
+
+
 
 
     }

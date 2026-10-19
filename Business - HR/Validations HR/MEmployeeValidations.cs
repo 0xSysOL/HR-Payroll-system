@@ -1,5 +1,7 @@
 ﻿using Models.Entities;
 using Models.Enums;
+using System.ComponentModel.Design;
+using static Models.Enums.M_Enums;
 
 namespace Business___HR.Validations
 {
@@ -9,6 +11,48 @@ namespace Business___HR.Validations
 
         public static bool IsEmpty(MEmployee employee) => employee == null;
         public static bool Is_eEmployeeEmpty(M_eColumnsName.eEmployee[] eEm) => eEm == null;
+        public static bool CheckFromInputs_IsNull(MEmployee StrEmployee,bool IsInserting)
+        {
+
+            if (StrEmployee.EmployeeID == null && !IsInserting)
+                return true;
+            else if (StrEmployee.CreateByUserID == null)
+                return true;
+            else if (StrEmployee.DepartmentID == null)
+                return true;
+            else if (StrEmployee.PersonID == null)
+                return true;
+            else if (StrEmployee.HireDate == null)
+                return true;
+            else if (StrEmployee.JobTitleID == null)
+                return true;
+            else if (StrEmployee.EmployeeSalary == null)
+                return true;
+            else if (StrEmployee.EmployeeStatus < 1 || StrEmployee.EmployeeStatus > 3)
+                return true;
+
+
+            return false;
+
+
+        }
+        public static bool IsValidInput(MEmployee StrEmployee)
+        {
+            if (StrEmployee.CreateByUserID >= 1) 
+                return true;
+            else if (StrEmployee.DepartmentID >= 1)
+                return true;
+            else if (StrEmployee.PersonID >= 1)
+                return true;
+            else if (StrEmployee.JobTitleID >=1)
+                return true;
+            else if (StrEmployee.EmployeeSalary >= 1)
+                return true;
+
+
+            return false;
+
+        }
 
         public static (bool, string) IsAllRequirementsPass(MEmployee employee)
         {
@@ -42,7 +86,7 @@ namespace Business___HR.Validations
 
 
             }
-            if (employee.Salary != null && employee.Salary <= 0)
+            if (employee.EmployeeSalary != null && employee.EmployeeSalary <= 0)
             {
 
 
@@ -52,7 +96,7 @@ namespace Business___HR.Validations
 
 
             }
-            if (employee.Status != null && employee.Status <= 0)
+            if (employee.EmployeeStatus != null && employee.EmployeeStatus <= 0)
             {
 
 
@@ -64,5 +108,29 @@ namespace Business___HR.Validations
         }
 
     }
+   
+    internal class MUserValidations
+    {
+
+        public static bool IsInputNULL(MUser StrUser, eMode mode)
+        {
+
+            if (StrUser.UserID == null && mode == eMode.Update)
+                return true;
+            else if (StrUser.Username == null)
+                return true;
+            else if (StrUser.Password == null)
+                return true;
+            else if (StrUser.IsActive == null)
+                return true;
+            else if (StrUser.EmployeeID == null)
+                return true;
+
+
+                return false;
+        }
+
+    }
+
 
 }

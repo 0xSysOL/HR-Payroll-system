@@ -20,8 +20,8 @@ namespace Models.Log_in_Info___Desktop
         public static string? GetUsername() => CurrentUser.Username != null ? CurrentUser.Username : "Username: Empty";
         public static void SetUsername(string Username) => CurrentUser.Username = Username;
 
-        public static int? GetPersonID() => CurrentUser.PersonID != null ? CurrentUser.PersonID : -1;
-        public static void SetPersonID(int PersonID) => CurrentUser.PersonID = PersonID;
+        public static int? GetPersonID() => CurrentUser.EmployeeID != null ? CurrentUser.EmployeeID : -1;
+        public static void SetPersonID(int PersonID) => CurrentUser.EmployeeID = PersonID;
 
  
 

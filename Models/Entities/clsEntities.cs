@@ -1,18 +1,15 @@
-﻿using System;
-
-namespace Models.Entities
+﻿namespace Models.Entities
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class DbColumnAttribute : Attribute
     {
         public string ColumnName { get; }
+
         public DbColumnAttribute(string ColumnName)
         {
             this.ColumnName = ColumnName;
         }
     }
-
-
 
     public class MApplicationLogAction
     {
@@ -40,8 +37,8 @@ namespace Models.Entities
 
     public class MApplicationType
     {
-        [DbColumnAttribute("ApplicationTypeID")]
-        public int? ApplicationTypeID { get; set; }
+        [DbColumnAttribute("AppTypeID")]
+        public int? AppTypeID { get; set; }
 
         [DbColumnAttribute("Title")]
         public string? Title { get; set; }
@@ -51,6 +48,12 @@ namespace Models.Entities
     {
         [DbColumnAttribute("ApplicationID")]
         public int? ApplicationID { get; set; }
+
+        [DbColumnAttribute("Date")]
+        public DateTime? Date { get; set; }
+
+        [DbColumnAttribute("LastStatusDate")]
+        public DateTime? LastStatusDate { get; set; }
 
         /// <summary>
         /// 1 = New. 2 = Canceled. 3 = Completed
@@ -84,6 +87,11 @@ namespace Models.Entities
 
         [DbColumnAttribute("EmployeeID")]
         public int? EmployeeID { get; set; }
+
+        [DbColumn("WorkHoursID")]
+        public int? WorkHoursID { get; set; }
+
+
     }
 
     public class MCountry
@@ -104,6 +112,18 @@ namespace Models.Entities
         public string? DepartmentName { get; set; }
     }
 
+    public class MJobTitle
+    {
+
+
+        [DbColumn("ID")]
+        public int? ID { get; set; }
+        [DbColumn("Title")]
+        public string? Title { get; set; }
+
+
+    }
+
     public class MEmployee
     {
         [DbColumnAttribute("EmployeeID")]
@@ -121,14 +141,17 @@ namespace Models.Entities
         [DbColumnAttribute("CreateByUserID")]
         public int? CreateByUserID { get; set; }
 
+        [DbColumnAttribute("JobTitleID")]
+        public int? JobTitleID { get; set; }
+
         [DbColumnAttribute("EmployeeSalary")]
-        public decimal? Salary { get; set; }
+        public decimal? EmployeeSalary { get; set; }
 
         /// <summary>
         /// 1 = Active. 2 = Suspended. 3 = Terminated.
         /// </summary>
         [DbColumnAttribute("EmployeeStatus")]
-        public byte? Status { get; set; }
+        public byte? EmployeeStatus { get; set; }
 
         [DbColumnAttribute("HireDate")]
         public DateTime? HireDate { get; set; }
@@ -136,8 +159,8 @@ namespace Models.Entities
 
     public class MMonthly_Payroll
     {
-        [DbColumnAttribute("MonthlyPayrollID")]
-        public int? MonthlyPayrollID { get; set; }
+        [DbColumnAttribute("MPayrollID")]
+        public int? MPayrollID { get; set; }
 
         [DbColumnAttribute("BaseSalary")]
         public decimal? BaseSalary { get; set; }
@@ -150,6 +173,9 @@ namespace Models.Entities
 
         [DbColumnAttribute("CreateDate")]
         public DateTime? CreateDate { get; set; }
+
+        [DbColumnAttribute("PaidDate")]
+        public DateTime? PaidDate { get; set; }
 
         /// <summary>
         /// 1 = New. 2 = Canceled. 3 = Completed
@@ -174,12 +200,7 @@ namespace Models.Entities
 
         [DbColumnAttribute("FinancialDate")]
         public DateTime? FinancialDate { get; set; }
-
-        [DbColumnAttribute("DateOfCreateReport")]
-        public DateTime? DateOfCreateReport { get; set; }
-
-        [DbColumnAttribute("CreateByUserID")]
-        public int? CreateByUserID { get; set; }
+        
     }
 
     public class MPeople
@@ -212,7 +233,7 @@ namespace Models.Entities
         public string? Address { get; set; }
 
         [DbColumnAttribute("PhoneNumber")]
-        public string? Phone { get; set; }
+        public string? PhoneNumber { get; set; }
 
         [DbColumnAttribute("Email")]
         public string? Email { get; set; }
@@ -238,7 +259,7 @@ namespace Models.Entities
         [DbColumnAttribute("TerminationDate")]
         public DateTime? TerminationDate { get; set; }
 
-        [DbColumnAttribute("Description")] 
+        [DbColumnAttribute("Description")]
         public string? Description { get; set; }
 
         [DbColumnAttribute("EmployeeID")]
@@ -266,8 +287,8 @@ namespace Models.Entities
         [DbColumnAttribute("IsActive")]
         public bool? IsActive { get; set; }
 
-        [DbColumnAttribute("PersonID")]
-        public int? PersonID { get; set; }
+        [DbColumnAttribute("EmployeeID")]
+        public int? EmployeeID { get; set; }
     }
 
     public class MVacation_Type
@@ -305,7 +326,4 @@ namespace Models.Entities
         [DbColumnAttribute("VacationTypeID")]
         public int? VacationTypeID { get; set; }
     }
-
-
-
 }

@@ -14,7 +14,7 @@ namespace Business___HR.Entities
 
         public static List<MCountry> GetData(int PageNumber, int RowPerPage)
         {
-
+             
 
             return clsCountry_DL.GetData(PageNumber,RowPerPage);
         }

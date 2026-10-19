@@ -1,9 +1,9 @@
-﻿using Data_Layer.Entities;
-using Microsoft.Data.SqlClient;
+﻿using Business___HR.Validations;
+using Data_Layer.Entities;
 using Models.Entities;
+using static Business___HR.Validations.MUserValidations;
 using static Models.Enums.M_eColumnsName;
 using static Models.Enums.M_Enums;
-
 namespace Business___HR.Entities
 {
     public class clsUser_BL
@@ -15,10 +15,10 @@ namespace Business___HR.Entities
         public string GetIsActive() => StrUser.IsActive != null ? StrUser.IsActive == true ? "Yes" : "No" : "Empty";
         public void SetIsActive(bool IsActive) => StrUser.IsActive = IsActive;
 
-        public int? PersonID
+        public int? EmployeeID
         {
-            get => StrUser.PersonID != null ? StrUser.PersonID : -1;
-            set => StrUser.PersonID = value;
+            get => StrUser.EmployeeID != null ? StrUser.EmployeeID : -1;
+            set => StrUser.EmployeeID = value;
 
         }
         public void SetPassword(string Password) => StrUser.Password = Utilities.Utilities.HashPassword(Password);
@@ -38,7 +38,15 @@ namespace Business___HR.Entities
         public bool Save()
         {
 
-            // Feat: Add Validation
+            if (IsInputNULL(StrUser,mode))
+                return false;
+
+            if (!clsEmployee_BL.IsEmployeeExists((int)StrUser.EmployeeID))
+                return false;
+
+            if (IsUsernameExists(StrUser.Username))
+                return false;
+
 
             switch (mode)
             {
@@ -81,8 +89,8 @@ namespace Business___HR.Entities
                         Structure.IsActive = false;
                         break;
 
-                    case eUser.PersonID:
-                        Structure.PersonID = -1;
+                    case eUser.EmployeeID:
+                        Structure.EmployeeID = -1;
                         break;
 
                     default:

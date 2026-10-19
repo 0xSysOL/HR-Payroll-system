@@ -13,8 +13,6 @@ namespace Data_Layer
         public class clsQCountry
         {
             public static string GetAll = "GetAllCountries";
-
-
         }
 
         public class clsQDepartment
@@ -22,7 +20,15 @@ namespace Data_Layer
 
             public static string Add = "AddDepartment";
 
+        } 
+
+        public class clsQJobTitle
+        {
+            public static string Add = "AddJobTitle";
+
         }
+
+
         public class clsQPeople
         {
 
@@ -32,7 +38,7 @@ namespace Data_Layer
             public static string SelectRecords = "SelectRecords_People";
             public static string SelectRecordsAndChooseColumns = "SelectRecordsAndChooseColumns_People";
             public static string IsNationalNoExists = "IsNationalNoExists";
-            public static string IsPersonIDExists = "IsPersonIDExists";
+            public static string IsPersonIDExists = "IsPersonExists";
             public static string GetPersonIDByID = "GetPersonIDByID"; 
 
         }
@@ -79,6 +85,12 @@ namespace Data_Layer
         {
             public static string Add = "AddTermination";
 
+
+        }
+        public class clsQPayrollReport
+        {
+
+            public static string IsFinancialDateExists = "IsFinancialDateExists";
 
         }
 

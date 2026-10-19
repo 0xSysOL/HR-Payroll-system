@@ -19,13 +19,11 @@ namespace Business___HR.Entities
         }
 
         public bool Add()
-        {
+        { 
 
             DepartmentOB.DepartmentID = clsDepartment_DL.Add(DepartmentOB);
 
             return DepartmentOB.DepartmentID != null ? true : false;
-
-
 
         }
 

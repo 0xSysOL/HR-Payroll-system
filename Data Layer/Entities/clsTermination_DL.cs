@@ -13,8 +13,8 @@ namespace Data_Layer.Entities
 {
     public class clsTermination_DL
     {
-
-        public static bool Add(MTermination Structure)
+         
+        public static int? Add(MTermination Structure)
         {
 
             using(SqlConnection connection = clsSetting.GetSqlConnection())
@@ -22,7 +22,7 @@ namespace Data_Layer.Entities
                 SqlCommand command = Utilities_DB.GetSQL_Command(clsQTermination.Add, connection, CommandType.StoredProcedure);
                 Utilities_DB.AddParametersWithValue<MTermination>(command, Structure);
                 connection.Open();
-                return Convert.ToInt32(Utilities_DB.ExecuteNoneQu(command)) != 0;
+                return Convert.ToInt32(Utilities_DB.Inserting_Execute(command));
             }
 
 
