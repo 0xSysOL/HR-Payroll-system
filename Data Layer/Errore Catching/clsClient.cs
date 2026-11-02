@@ -23,7 +23,9 @@ namespace Data_Layer.Errore_Catching
 
             StreamString SS = new StreamString(PipeClientStream);
 
-            SS.WriteString("Hi Do You See me");
+            SS.WriteString("Hi Do You See me 1");
+
+          
 
         }
 
@@ -41,17 +43,7 @@ namespace Data_Layer.Errore_Catching
             streamEncoding = new UnicodeEncoding();
         }
 
-        public string ReadString()
-        {
-            int len;
-            len = ioStream.ReadByte() * 256;
-            len += ioStream.ReadByte();
-            var inBuffer = new byte[len];
-            ioStream.Read(inBuffer, 0, len);
-
-            return streamEncoding.GetString(inBuffer);
-        }
-
+     
         public int WriteString(string outString)
         {
             byte[] outBuffer = streamEncoding.GetBytes(outString);
