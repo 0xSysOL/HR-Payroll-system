@@ -3,13 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static Models.Enums.M_Enums;
-using System.Security.Cryptography;
 namespace Business___HR.Utilities
-{ 
-    internal  class Utilities
+{
+
+    public class BusinessException : Exception
+    {
+
+        public int CodeError { get; }
+        public BusinessException(int CodeError, string Message) : base(Message) => this.CodeError = CodeError;
+
+    }
+
+    internal class clsUtilities
     {
         #region OLD
 
@@ -96,7 +105,7 @@ namespace Business___HR.Utilities
 
 
 
-        public static  eMode ChangeModeToUpdate(eMode mode)
+        public static eMode ChangeModeToUpdate(eMode mode)
         {
 
             if (mode == eMode.Add)
@@ -107,7 +116,7 @@ namespace Business___HR.Utilities
 
 
 
-       public static string HashPassword(string Value)
+        public static string HashPassword(string Value)
         {
             byte[] Values = Encoding.UTF8.GetBytes(Value);
             SHA256 Hash = SHA256.Create();
@@ -130,6 +139,8 @@ namespace Business___HR.Utilities
 
 
         public static bool IsNull(object Value) => Value == null;
+
+        public static bool IsTextNullorEmpty(string Value) => string.IsNullOrEmpty(Value);
 
 
 

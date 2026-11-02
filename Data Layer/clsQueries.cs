@@ -79,6 +79,8 @@ namespace Data_Layer
             public static string SelectRecords = "SelectRecords_Applications";
             public static string GetApplicationByID = "GetApplicationByID";
 
+            public static string IsApplicationExists = "IsApplicationExists";
+
         }
 
         public class clsQTermination

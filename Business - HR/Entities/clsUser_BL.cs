@@ -21,7 +21,7 @@ namespace Business___HR.Entities
             set => StrUser.EmployeeID = value;
 
         }
-        public void SetPassword(string Password) => StrUser.Password = Utilities.Utilities.HashPassword(Password);
+        public void SetPassword(string Password) => StrUser.Password = Utilities.clsUtilities.HashPassword(Password);
 
         public clsUser_BL()
         {

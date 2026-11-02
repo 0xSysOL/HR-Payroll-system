@@ -6,27 +6,32 @@ namespace Business___HR.Entities
     public class clsApplication_BL
     {
 
-        public MApplication StrApplication;
+        private MApplication StrApplication;
         eMode mode;
 
-        public clsApplication_BL()
+        public clsApplication_BL(MApplication StrApplication)
         {
             mode = eMode.Add;
-            StrApplication = new MApplication();
-
+            this.StrApplication = StrApplication;
         }
-        public clsApplication_BL(int ApplicationID, eApplicationType type) : this()
+
+
+        public clsApplication_BL(int ApplicationID, eApplicationStatus StatusType)
         {
             mode = eMode.Update;
-            StrApplication.Status = (byte)type;
+            StrApplication.Status = (byte)StatusType;
             StrApplication.ApplicationID = ApplicationID;
-
 
         }
 
 
         public bool Save()
         {
+            if (mode == eMode.Update && !IsApplicationExists((int)StrApplication.ApplicationID))
+                return false;
+            else if (mode == eMode.Update && !IsApplicationNew((int)StrApplication.ApplicationID))
+                return false;
+
 
             switch (mode)
             {
@@ -44,7 +49,7 @@ namespace Business___HR.Entities
         }
 
 
-       
+
 
         // Update SelectRecords
         // SelectRecords
@@ -60,7 +65,15 @@ namespace Business___HR.Entities
             return clsApplication_DL.GetApplication(ID);
         }
 
+        public static bool IsApplicationExists(int ID)
+        {
 
+            return clsApplication_DL.IsApplicationExists(ID);
+        }
+        public static bool IsApplicationNew(int ID)
+        {
+            return clsApplication_DL.IsApplicationNew(ID);
+        }
 
 
     }

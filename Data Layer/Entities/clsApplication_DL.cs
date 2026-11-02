@@ -81,6 +81,26 @@ namespace Data_Layer.Entities
 
             }
         }
+        public static bool IsApplicationExists(int ApplicationID)
+        {
+
+            using(SqlConnection connection = clsSetting.GetSqlConnection())
+            {
+                SqlCommand command = Utilities_DB.GetSQL_Command(clsQApplication.IsApplicationExists, connection, CommandType.StoredProcedure);
+                command.Parameters.AddWithValue("ApplicationID", ApplicationID);
+                connection.Open();
+
+                return Utilities_DB.Scalar_Execute(command) != null;
+
+            }
+
+        }
+        public static bool IsApplicationNew(int ID)
+        {
+
+            return false;
+        }
+
 
 
     }

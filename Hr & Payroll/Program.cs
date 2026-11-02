@@ -1,6 +1,7 @@
 ﻿using Business___HR.Entities;
 using Business_Payroll.Entities;
 using Models.Entities;
+using Models.Enums;
 using System.Diagnostics;
 namespace Hr___Payroll
 {
@@ -266,31 +267,45 @@ namespace Hr___Payroll
 
         public static void TestApplication()
         {
-            //clsApplication_BL App = new clsApplication_BL(10, M_Enums.eApplicationType.Canceled);
+            //clsApplication_BL App = new clsApplication_BL(10, M_Enums.eApplicationStatus.Canceled);
+
+            MApplication StrApplication = new MApplication();
+
+            StrApplication.ApplicationTypeID = 1;
+            StrApplication.CreateByUserID = 1;
+            StrApplication.EmployeeID = 1;
+            StrApplication.Date = DateTime.Now;
+
+            clsApplication_BL App = new clsApplication_BL(StrApplication);
 
 
-            ////App.StrApplication.Application_ID = 10;
-            ////App.StrApplication.AppType_ID = 1;
-            ////App.StrApplication.EmployeeID = 7;
-            ////App.StrApplication.CreateByUserID = 10;
 
-            //App.Save();
+            //App.StrApplication.Application_ID = 10;
+            //App.StrApplication.AppType_ID = 1;
+            //App.StrApplication.EmployeeID = 7;
+            //App.StrApplication.CreateByUserID = 10;
+
+           Console.WriteLine("Result: "+App.Save());
+
+
             //List<MApplication> ms = clsApplication_BL.SelectRecords(1, 3);
             //ms = clsApplication_BL.SelectRecords(1, 3);
-            Stopwatch t1 = Stopwatch.StartNew();
 
-            MApplication d = clsApplication_BL.GetApplicationByID(3);
-            t1.Stop();
-            Console.WriteLine("MS:" + t1.ElapsedMilliseconds);
-            Stopwatch t2 = Stopwatch.StartNew();
 
-            MApplication d2 = clsApplication_BL.GetApplicationByID(3);
-            t2.Stop();
-            Console.WriteLine("MS:" + t2.ElapsedMilliseconds);
+            //Stopwatch t1 = Stopwatch.StartNew();
+
+            //MApplication d = clsApplication_BL.GetApplicationByID(3);
+            //t1.Stop();
+            //Console.WriteLine("MS:" + t1.ElapsedMilliseconds);
+            //Stopwatch t2 = Stopwatch.StartNew();
+
+            //MApplication d2 = clsApplication_BL.GetApplicationByID(3);
+            //t2.Stop();
+            //Console.WriteLine("MS:" + t2.ElapsedMilliseconds);
 
 
         }
-
+      
         public static void TestTermination()
         {
             MTermination termination = new MTermination();
@@ -317,6 +332,24 @@ namespace Hr___Payroll
 
         }
 
+        public static void TestVacation()
+        {
+            Models.Entities.MVacation vacation = new MVacation();
+
+            vacation.BeginDate = Convert.ToDateTime("2028/2/3");
+            vacation.EndDate = Convert.ToDateTime("2028/2/6");
+            vacation.VacationReason = "Test";
+            vacation.ApplicationID = 1;
+            vacation.VacationTypeID = 1;
+
+
+            clsVacation_BL clsVacation = new clsVacation_BL(vacation);
+
+            clsVacation.Add();
+
+
+        }
+
         static Stopwatch t1 = Stopwatch.StartNew();
         public static void StartTime()
         {
@@ -334,6 +367,7 @@ namespace Hr___Payroll
         }
         static void Main(string[] args)
         {
+            //TestVacation(); In Queue
             //TestCountryClass();
             //TestDepartment();
             //TestPeople();
@@ -345,9 +379,11 @@ namespace Hr___Payroll
             //TestPayrollReports();
 
 
+            // Start Project
+            Data_Layer.Errore_Catching.clsClient clsClient = new Data_Layer.Errore_Catching.clsClient();
 
 
-
+            clsClient.Start();
 
 
 

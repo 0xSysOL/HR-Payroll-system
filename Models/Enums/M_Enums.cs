@@ -4,7 +4,7 @@
     {
 
         public enum eMode { Add, Update }
-        public enum eApplicationType { New = 1, Canceled = 2, Completed = 3 }
+        public enum eApplicationStatus { New = 1, Canceled = 2, Completed = 3 }
 
     }
 
