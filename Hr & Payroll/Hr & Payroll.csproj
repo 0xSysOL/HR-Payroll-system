@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - HR Client - WS Server.csproj" />
     <ProjectReference Include="..\Business - HR\Business - HR.csproj" />
     <ProjectReference Include="..\Business Payroll\Business Payroll.csproj" />
   </ItemGroup>

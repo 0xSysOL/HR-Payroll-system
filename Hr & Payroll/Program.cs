@@ -1,8 +1,11 @@
 ﻿using Business___HR.Entities;
 using Business_Payroll.Entities;
+using Data_Layer.Errore_Catching;
+using Models;
 using Models.Entities;
 using Models.Enums;
 using System.Diagnostics;
+
 namespace Hr___Payroll
 {
     internal class Program
@@ -380,14 +383,10 @@ namespace Hr___Payroll
 
 
             // Start Project
-            Data_Layer.Errore_Catching.clsClient clsClient = new Data_Layer.Errore_Catching.clsClient();
 
+            MErrorInformation e = new MErrorInformation(new Exception());
 
-            clsClient.Start();
-
-
-
-
+            clsClient_BL.Start(e);
 
 
 

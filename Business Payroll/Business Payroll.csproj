@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - HR Client - WS Server.csproj" />
     <ProjectReference Include="..\Data Layer\Data Layer.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
