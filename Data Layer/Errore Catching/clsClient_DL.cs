@@ -1,10 +1,9 @@
 ﻿using Models;
-using Models.Entities;
 using Setting___HR_Client___WS_Server;
 using System.IO.Pipes;
 using System.Text;
 using System.Text.Json;
-using System.Xml.Linq;
+using static Data_Layer.Utilities_DB;
 namespace Data_Layer.Errore_Catching
 {
 
@@ -13,37 +12,89 @@ namespace Data_Layer.Errore_Catching
 
     public static class clsClient_DL
     {
-        // Change Pip name from hardcode to  App.config 
-        private static NamedPipeClientStream PipeClientStream = new NamedPipeClientStream(".", 
-            GetValuesFromAppConfig.GetValueInTag("NameOfPipe").Item1, PipeDirection.Out);
+        private static NamedPipeClientStream PipeClientStream = new NamedPipeClientStream(".", GetValuesFromAppConfig.GetValueInTag("NameOfPipe").Item1, PipeDirection.Out, PipeOptions.WriteThrough);
         private static SemaphoreSlim slim = new SemaphoreSlim(1, 1);
+        private static TaskProcessor<MErrorInformation> QMError = new TaskProcessor<MErrorInformation>();
 
-        public static async void Start(MErrorInformation StrError)
+        private static async Task<bool> ConnectToServer()
         {
-            
-            await slim.WaitAsync();
+            if (PipeClientStream == null) return false;
 
 
             try
             {
-                PipeClientStream.Connect();
+                if (!PipeClientStream.IsConnected)
+                    await PipeClientStream.ConnectAsync(2000);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+
+            }
+
+        }
+        private static async Task<bool> WriteToPipeStringAsync(MErrorInformation? StrError)
+        {
+            if (StrError == null) return false;
+
+            try
+            {
                 StreamString SS = new StreamString(PipeClientStream);
                 await SS.WriteStringAsync(JsonSerializer.Serialize(StrError));
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private static async Task WriteWithQueue(MErrorInformation StrError)
+        {
+            if (!await WriteToPipeStringAsync(StrError))
+            {
+                await QMError.Enqueue(StrError);
+                return;
+            }
+
+
+
+            while (QMError.Count > 0)
+            {
+                if (!await WriteToPipeStringAsync(QMError.Peek()))
+                    break;
+
+                QMError.Dequeue();
+            }
+
+
+        }
+        public static async Task Start(MErrorInformation StrError)
+        {
+            //Interlocked.Increment(ref waitingThreadsCount);
+
+
+            await slim.WaitAsync();
+
+            try
+            {
+                if (!await ConnectToServer())
+                    await QMError.Enqueue(StrError);
+                else
+                    await WriteWithQueue(StrError);
+
 
             }
             finally
             {
-                try
-                {
-                    PipeClientStream.Dispose();
-                }
-                finally
-                {
-                    slim.Release();
-                }
+
+
+                slim.Release();
+                //Interlocked.Decrement(ref waitingThreadsCount);
 
             }
-
 
 
 
@@ -72,15 +123,17 @@ namespace Data_Layer.Errore_Catching
             int len = outBuffer.Length;
             if (len > UInt16.MaxValue)
             {
-                len = (int)UInt16.MaxValue;
+                //len = (int)UInt16.MaxValue;
+                throw new Exception("Length is greater than Int16 value");
             }
             ioStream.WriteByte((byte)(len / 256));
             ioStream.WriteByte((byte)(len & 255));
             ioStream.Write(outBuffer, 0, len);
-            ioStream.Flush();
+            await ioStream.FlushAsync();
 
             return outBuffer.Length + 2;
         }
     }
+
 
 }

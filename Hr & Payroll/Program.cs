@@ -1,9 +1,7 @@
 ﻿using Business___HR.Entities;
 using Business_Payroll.Entities;
-using Data_Layer.Errore_Catching;
 using Models;
 using Models.Entities;
-using Models.Enums;
 using System.Diagnostics;
 
 namespace Hr___Payroll
@@ -288,7 +286,7 @@ namespace Hr___Payroll
             //App.StrApplication.EmployeeID = 7;
             //App.StrApplication.CreateByUserID = 10;
 
-           Console.WriteLine("Result: "+App.Save());
+            Console.WriteLine("Result: " + App.Save());
 
 
             //List<MApplication> ms = clsApplication_BL.SelectRecords(1, 3);
@@ -308,7 +306,7 @@ namespace Hr___Payroll
 
 
         }
-      
+
         public static void TestTermination()
         {
             MTermination termination = new MTermination();
@@ -368,7 +366,7 @@ namespace Hr___Payroll
             t1.Reset();
             return MS;
         }
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //TestVacation(); In Queue
             //TestCountryClass();
@@ -384,12 +382,34 @@ namespace Hr___Payroll
 
             // Start Project
 
-            MErrorInformation e = new MErrorInformation(new Exception());
-
-            clsClient_BL.Start(e);
 
 
+            //Parallel.For(0, 50, async n =>
+            //  {
+            //      MErrorInformation uniqueError = new MErrorInformation()
+            //      {
+            //          Message = "Error Number " + n, 
+            //          OccuredAt = DateTime.Now
+            //      };
+            //     await clsClient_BL.Start(uniqueError);
 
+            //  });
+
+            //Console.ReadLine();
+                
+            //MErrorInformation e2 = new MErrorInformation(new Exception());
+
+            //e2.ErrorID = 2;
+            //e2.OccuredAt = new DateTime(2020, 2, 3);
+            //Parallel.For(0, 5, async n =>
+            //{
+
+            //    clsClient_BL.Start(e2);
+
+            //});
+
+
+          
 
 
             //ConcurrentDictionary<int, double> keyValuePairs = new ConcurrentDictionary<int, double>();
@@ -408,7 +428,7 @@ namespace Hr___Payroll
 
 
             //Console.WriteLine(keyValuePairs.Average(n => n.Value));
-
+     
 
         }
 

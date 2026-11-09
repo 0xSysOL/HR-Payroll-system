@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business Payroll", "..\Busi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "..\Models\Models.csproj", "{DB702339-51FD-4CCB-92CA-7D1E7C486315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Setting - HR Client - WS Server", "..\..\..\..\..\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - HR Client - WS Server.csproj", "{19D07040-BE95-8DC5-95B4-62B8ADC73A85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Setting - Project Client - WS Server", "..\..\..\..\..\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - HR Client - WS Server\Setting - Project Client - WS Server.csproj", "{5011066A-90A3-AF98-87DD-B5857276E14E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{DB702339-51FD-4CCB-92CA-7D1E7C486315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB702339-51FD-4CCB-92CA-7D1E7C486315}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB702339-51FD-4CCB-92CA-7D1E7C486315}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19D07040-BE95-8DC5-95B4-62B8ADC73A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19D07040-BE95-8DC5-95B4-62B8ADC73A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19D07040-BE95-8DC5-95B4-62B8ADC73A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19D07040-BE95-8DC5-95B4-62B8ADC73A85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5011066A-90A3-AF98-87DD-B5857276E14E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5011066A-90A3-AF98-87DD-B5857276E14E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5011066A-90A3-AF98-87DD-B5857276E14E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5011066A-90A3-AF98-87DD-B5857276E14E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@ namespace Business___HR.Entities
     {
 
 
-        public static void Start(MErrorInformation e) => clsClient_DL.Start(e);
+        public static async Task Start(MErrorInformation e) => await clsClient_DL.Start(e);
 
 
     }

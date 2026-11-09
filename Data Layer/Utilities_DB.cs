@@ -1,6 +1,7 @@
 ﻿using Data_Layer.Configuration;
 using Microsoft.Data.SqlClient;
 using Models.Entities;
+using System.Collections.Concurrent;
 using System.Data;
 using System.Reflection;
 namespace Data_Layer
@@ -460,5 +461,61 @@ namespace Data_Layer
         static void AddToCacheDictionary(string ClassName, PropertyInfo[] properties) => clsSetting.cache.GetOrAdd(ClassName, properties);
 
 
+
+        #region My Helper Classes
+        public class TaskProcessor<T>
+        {
+            private ConcurrentQueue<T> C_Queue;
+
+            public int Count
+            {
+                get
+                {
+                    return C_Queue.Count;
+                }
+            }
+
+
+
+            public TaskProcessor()
+            {
+                C_Queue = new ConcurrentQueue<T>();
+            }
+
+            public T? Peek()
+            {
+                if (C_Queue == null) return default;
+
+
+                if (C_Queue.TryPeek(out T? result))
+                    return result;
+
+
+                return default;
+
+            }
+            public T? Dequeue()
+            {
+                if (C_Queue == null) return default;
+
+
+                if (C_Queue.TryDequeue(out T? result))
+                    return result;
+
+
+                return default;
+
+            }
+
+
+            public async Task Enqueue(T Ob) => C_Queue.Enqueue(Ob);
+
+
+
+
+        }
+
+
+        #endregion END
     }
 }
